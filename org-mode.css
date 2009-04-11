@@ -1,0 +1,81 @@
+html {
+background-color: #eee;
+}
+
+body {
+    font-family: 'Adobe Caslon Pro', Baskerville, Georgia, serif;
+    background-color: #fff;
+    width: 50em;
+    margin: 0px auto;
+    padding: 4em;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    font-size: 1em;
+    line-height: 120%;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: Gill Sans, Helvetica Neue, sans-serif;
+}
+
+h2 {
+    border-left: 0.8em solid #333;
+    margin-left: -1.6em;
+    padding-left: 0.8em;
+}
+
+h3, h4, h5 {
+    color: #333;
+    border-bottom: 1px solid #333;
+}
+
+.outline-3 {
+    margin-left: 0.5em;
+}
+
+#postamble {
+    color: #555;
+    margin-top: 3em;
+    border-top: 1px solid #000;
+}
+
+.title {
+    font-size: 3em;
+    text-align: center;
+    padding: 0.3em;
+    border-bottom: 2px solid #000;
+}
+
+.todo  {
+ color: red; 
+}
+
+.done {
+ color: green; 
+}
+
+.timestamp {
+ color: grey 
+}
+
+.timestamp-kwd {
+ color: CadetBlue 
+}
+
+.tag {
+ background-color:lightblue; font-weight:normal 
+}
+
+.target {
+ background-color: lavender; 
+}
+
+pre {
+    
+    font-size: 0.8em;
+    border: 1pt solid #AEBDCC;
+    background-color: #F3F5F7;
+    padding: 5pt;
+    font-family: courier, monospace;
+
+}

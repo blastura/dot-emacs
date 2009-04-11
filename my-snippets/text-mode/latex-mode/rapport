@@ -1,0 +1,71 @@
+#contributor : anton.johansson@gmail.com
+#name : Rapport template
+# --
+\documentclass[a4paper, 12pt]{article}
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{parskip}
+% Include pdf with multiple pages ex \includepdf[pages=-, nup=2x2]{filename.pdf}
+\usepackage[final]{pdfpages}
+% Place figures where they should be
+\usepackage{float}
+
+% vars
+\def\title{${1:Titel på rapporten}}
+\def\preTitle{${2:Rapport benämning ex Obligatorisk uppgift 1}}
+\def\kurs{${3:Namn på kursen}}
+
+\def\namn{Anton Johansson}
+\def\mail{${4:dit06ajn@cs.umu.se}}
+
+\def\handledareEtt{${5:Handledare, Mail}}
+\def\inst{${6:Namn på institutioinen}}
+\def\dokumentTyp{${7:Laborationsrapport}}
+
+\begin{document}
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{small}
+    \begin{tabular}{@{}p{\textwidth}@{}}
+      UMEÅ UNIVERSITET \hfill \today \\\\
+      Institutionen för \inst \\\\
+      \dokumentTyp \\\\
+    \end{tabular}
+  \end{small}
+  \vspace{10mm}
+  \begin{center}
+    \LARGE{\preTitle} \\\\
+    \huge{\textbf{\kurs}} \\\\
+    \vspace{10mm}
+    \LARGE{\title} \\\\
+    \vspace{15mm}
+    \begin{large}
+      \namn, \mail
+    \end{large}
+    \vfill
+    \large{\textbf{Handledare}}\\\\
+    \mbox{\large{\handledareEtt}}
+  \end{center}
+\end{titlepage}
+
+\pagestyle{fancy}
+\rhead{\today}
+\lhead{\namn, \mail}
+\chead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\tableofcontents
+\newpage
+
+\rfoot{\thepage}
+\pagenumbering{arabic}
+
+\section{Inledning}
+$0
+
+\end{document}

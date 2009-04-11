@@ -1,0 +1,7 @@
+#contributor : anton.johansson@gmail.com
+#name : \appendix...
+# --
+\newpage
+\appendix
+\section{${1:Bilagor}}
+\pagenumbering{roman}$0

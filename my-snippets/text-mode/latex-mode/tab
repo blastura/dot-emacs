@@ -1,0 +1,6 @@
+#contributor : anton.johansson@gmail.com
+#name : \tabular{...}...
+# --
+\begin{tabular}{${1:align ex lr}}
+   $2 & $0 \\
+\end{tabular}

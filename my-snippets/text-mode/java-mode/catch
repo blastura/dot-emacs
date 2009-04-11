@@ -1,0 +1,7 @@
+#contributor: anton.johansson@gmail.com
+#name: catch() .
+# --
+catch ($0 e) {
+// TODO - fix error message
+e.printStackTrace();
+}

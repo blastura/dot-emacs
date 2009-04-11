@@ -1,0 +1,18 @@
+#contributor: anton.johansson@gmail.com
+#name: public class extends TestCase ...
+# --
+/*
+ * @(#)$`(buffer-name)`
+ * Time-stamp: "2008-11-09 02:53:45 anton"
+ */
+
+import junit.framework.*;
+
+public class `(car (split-string (buffer-name) ".java"))` extends TestCase { 
+    public `(car (split-string (buffer-name) ".java"))`(String name) {
+        super(name);
+    }
+
+    public void test$0() {
+    }
+}

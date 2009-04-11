@@ -1,0 +1,8 @@
+#contributor: anton.johansson@gmail.com
+#name: public class ...
+# --
+public class ${1:Classname} {
+    public $1 ($2) {
+        $0
+    }
+}

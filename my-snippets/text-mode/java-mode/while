@@ -1,0 +1,6 @@
+#contributor: anton.johansson@gmail.com
+#name: while() ...
+# --
+while ($0) {
+
+}

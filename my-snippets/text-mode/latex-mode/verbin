@@ -1,0 +1,7 @@
+#contributor : anton.johansson@gmail.com
+#name : \begin{figure}...
+# --
+\section{$1}
+\begin{footnotesize}
+\verbatiminput{${1:filename}}
+\end{footnotesize}

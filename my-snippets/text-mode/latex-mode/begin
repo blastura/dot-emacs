@@ -1,0 +1,6 @@
+#contributor : anton.johansson@gmail.com
+#name : \begin{...}\end{...}
+# --
+\begin{${1:figure, displaymath, center ...}}
+$0
+\end{$1}

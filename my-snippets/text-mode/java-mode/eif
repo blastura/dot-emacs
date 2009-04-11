@@ -1,0 +1,6 @@
+#contributor: anton.johansson@gmail.com
+#name: else if() ...
+# --
+else if ($0) {
+
+}

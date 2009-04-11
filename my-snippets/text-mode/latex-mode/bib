@@ -1,0 +1,5 @@
+#contributor : anton.johansson@gmail.com
+#name : \bibliographystyle{...}...
+# --
+\bibliographystyle{plain}
+\bibliography{${1:books}}$0

@@ -1,0 +1,12 @@
+#contributor : anton.johansson@gmail.com
+#name : \begin{figure}...
+# (setq text "filename.png")
+# (car (split-string text "[.]"))
+# --
+\begin{figure}[${1:H}]
+  \begin{center}
+    \includegraphics[width=${2:110}mm]{${3:filename.(pdf/png)}}
+    \caption{$0}
+    \label{fig:${3:$(car (split-string text "[.]"))}}
+  \end{center}
+\end{figure}

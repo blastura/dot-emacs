@@ -1,0 +1,4 @@
+#contributor: anton.johansson@gmail.com
+#name: System.out.println(...)
+# --
+System.out.println($0);

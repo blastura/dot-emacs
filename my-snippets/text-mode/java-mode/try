@@ -1,0 +1,9 @@
+#contributor: anton.johansson@gmail.com
+#name: try() . catch() .
+# --
+try {
+$0
+} catch (Exception e) {
+//TODO - fix error message
+e.printStackTrace();
+}

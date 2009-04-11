@@ -1,0 +1,10 @@
+#contributor : anton.johansson@gmail.com
+#name : \begin{figure}...
+# (setq text "filename.png")
+# (car (split-string text "[.]"))
+# --
+\begin{minipage}[b]{0.5\linewidth}
+   \centering
+   \caption{$0}\label{fig:${1:$(car (split-string text "[.]"))}}
+   \includegraphics[width=6cm]{${1:filename.(pdf/png)}}
+\end{minipage}
