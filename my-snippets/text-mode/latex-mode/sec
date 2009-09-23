@@ -1,4 +1,5 @@
 #contributor : anton.johansson@gmail.com
 #name : \section{...}
 # --
-\section{$0}
+\section{${1:.}}\label{sec:$1}
+$0

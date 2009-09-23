@@ -1,11 +1,12 @@
 ;; Tex
-;; Time-stamp: "2008-10-08 19:25:54 anton"
+;; Time-stamp: "2009-06-04 12:54:42 anton"
 
 (defun my-latex-mode-hook()
   (TeX-PDF-mode t)
+  (TeX-fold-mode 1)
   ;;(longlines-mode 0)
   (flyspell-mode 1)
-  (ispell-change-dictionary "sv" nil)
+  (ispell-change-dictionary "svenska" nil)
   (auto-fill-mode 1)
   (local-set-key (kbd "C-c C-f") 'LaTeX-close-environment) ;; Nxml style close
   (local-set-key (kbd "C-c C-n") 'TeX-next-error)

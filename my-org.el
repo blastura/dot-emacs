@@ -18,16 +18,8 @@
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"/Users/anton/.emacs.d/org-mode.css\" />")
 (set-variable 'org-export-with-section-numbers nil)
 
-(defun my-text-mode()
-  (interactive)
-  ;;   (set-default-font "-apple-gill sans-medium-r-normal--16-0-72-72-m-0-iso10646-1" nil)
-  (set-default-font "-apple-adobe caslon pro-medium-r-normal--16-0-72-72-m-0-iso10646-1" nil)
-  (highlight-current-line-set-bg-color "grey88")
-  (progn (color-theme-jsc-light2) ;;dark and fine
-         (highlight-current-line-set-bg-color "grey77"))
-  (custom-set-faces
-   '(flymake-warnline ((((class color)) (:underline "yellow"))))
-   '(flyspell-duplicate ((t (:underline "Gold3"))))
-   '(flyspell-incorrect ((t (:underline "OrangeRed"))))))
+;; Clocking
+(setq org-clock-history-length 35)
+
 
 (provide 'my-org)

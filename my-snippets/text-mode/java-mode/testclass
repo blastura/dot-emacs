@@ -1,18 +1,22 @@
 #contributor: anton.johansson@gmail.com
-#name: public class extends TestCase ...
+#name: Junit4 public class... 
 # --
-/*
- * @(#)$`(buffer-name)`
- * Time-stamp: "2008-11-09 02:53:45 anton"
- */
+import org.junit.*;
+import static org.junit.Assert.*;
 
-import junit.framework.*;
+public class `(car (split-string (buffer-name) ".java"))` {
 
-public class `(car (split-string (buffer-name) ".java"))` extends TestCase { 
-    public `(car (split-string (buffer-name) ".java"))`(String name) {
-        super(name);
+    @Before
+    public void setUp() {
+        // Before every test is run
     }
 
+    @After
+    public void tearDown() {
+        // After every test is run
+    }
+    
+    @Test
     public void test$0() {
     }
 }

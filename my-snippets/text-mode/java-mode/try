@@ -3,7 +3,7 @@
 # --
 try {
 $0
-} catch (Exception e) {
-//TODO - fix error message
-e.printStackTrace();
+}
+catch (Exception e) {
+
 }

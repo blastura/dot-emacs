@@ -1,5 +1,5 @@
 ;; Generics
-;; Time-stamp: "2009-04-11 10:00:31 anton"
+;; Time-stamp: "2009-07-17 15:47:50 anton"
 (server-start)
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
@@ -19,6 +19,12 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(setq sentence-end-double-space nil)
+(setq dabbrev-abbrev-skip-leading-regexp "[^ ]*[<>=*]") ;; script <tags> when expanding
+
+;; Add color to a shell running in emacs ‘M-x shell’
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (setq exec-path (cons "/opt/local/bin" exec-path))
 (setenv "PATH" (concat "/opt/local/bin:/opt/local/sbin:"
@@ -36,7 +42,19 @@
 
 ;; Compilation ;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq compilation-scroll-output t)
-(setq compilation-window-height 20)
+(setq compilation-window-height 8)
+
+;; (setq compilation-finish-function
+;;       (lambda (buf str)
+;;         (let (comp-saved-window-configuration (current-window-configuration))
+;;           (if (string-match "exited abnormally" str)
+;;               ;;there were errors
+;;               (message "compilation errors, press C-x ` to visit")
+;;             ;;no errors, make the compilation window go away in 0.5 seconds
+;;             (run-at-time 0.5 nil '(set-window-configuration
+;;                                    comp-saved-window-configuration))
+;;             (message "NO COMPILATION ERRORS!")))))
+
 
 ;; Skeletons
 (global-set-key "'" 'skeleton-pair-insert-maybe)
@@ -53,8 +71,10 @@
 (global-set-key "\M-2" 'end-of-buffer)
 (global-set-key (kbd "C-M-SPC") 'anything)
 (global-set-key "\M-n" 'just-one-space)
+(global-set-key "\M-p" 'mark-paragraph)
 (global-set-key "\M-j" 'hippie-expand) ;dabbrev-expand)
 
+(setq hippie-expand-dabbrev-as-symbol nil)
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
         try-expand-dabbrev
@@ -71,6 +91,7 @@
 
 (global-set-key "\C-w" 'backward-kill-word) ;; erases standard kill-region
 (global-set-key "\C-x\C-k" 'kill-region) ;; replace standard kill-region
+(global-set-key "\M-y" 'anything-show-kill-ring) ;; replace standard yank-pop
 (global-set-key (kbd "C-x C-b") #'ibuffer) ;; removes standard list-buffers
 (global-set-key "\C-c\C-o" 'ffap)
 (global-set-key "\C-x\C-m" 'execute-extended-command) ;; M-x
@@ -92,6 +113,9 @@
 
 ;; Alias
 (defalias 'qrr 'query-replace-regexp)
+
+;; GDB
+(setq gdb-many-windows t)
 
 ;; Autosaves ;;;;;;;;;;;;;;;;;;;;
 ;; Put autosave files (ie #foo#) in one place, *not* scattered all over the
@@ -181,6 +205,11 @@
   (delete-file "/tmp/tidy-errs")
   (message "buffer tidy'ed"))
 
+(defun google-region (beg end)
+  "Google the selected region."
+  (interactive "r")
+  (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
+
 ;; Open all existing files read-only
 ;; (defun my-find-file-hook()
 ;;   (toggle-read-only t))
@@ -189,7 +218,19 @@
 ;; Make switching better with completions
 (ido-mode 1)
 (setq ido-enable-flex-matching t) ; fuzzy matching
+(setq ido-create-new-buffer 'always)
 
 ;; Log-edit
 (add-hook 'log-edit-mode-hook 'flyspell-mode)
+
+
+;; Buffers/files identical names
+;; TODO : move
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "|")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
+
+
 (provide 'my-generic)

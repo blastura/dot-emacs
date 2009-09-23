@@ -15,6 +15,7 @@
 
 ;; JDE
 (setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home")
+;;(setenv "JAVA_HOME" "/System/Library/Frameworks/JavaVM.framework/Versions/1.5/Home")
 
 (custom-set-variables
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6"))))

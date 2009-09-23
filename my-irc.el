@@ -1,13 +1,14 @@
 ;; Irc
-;; Time-stamp: "2009-03-06 23:05:35 anton"
+;; Time-stamp: "2009-06-06 12:04:48 anton"
 
 (eval-after-load 'rcirc '(require 'rcirc-notify))
+(eval-after-load 'rcirc '(load "~/.rcirc-authinfo"))
 
 (add-hook 'rcirc-mode-hook
           (lambda ()
             (flyspell-mode 1)
-            (set (make-local-variable 'scroll-conservatively)
-                 8192)))
+            (set (make-local-variable 'scroll-conservatively) 8192)
+            (local-set-key "\C-c\C-o" 'ffap)))
 
 (setq rcirc-default-nick "blastura")
 

@@ -1,32 +1,70 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+
 html {
-background-color: #eee;
+/* background-color: #eee; */
 }
 
 body {
-    font-family: 'Adobe Caslon Pro', Baskerville, Georgia, serif;
-    background-color: #fff;
-    width: 50em;
+    font-family: 'Adobe Garamond Pro', Baskerville, Georgia, serif;
+    background-color: #eed;
+    width: 80%;
     margin: 0px auto;
     padding: 4em;
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
     font-size: 1em;
-    line-height: 120%;
+    line-height: 1.3em;
+}
+
+a {
+   color: #008800; 
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: Gill Sans, Helvetica Neue, sans-serif;
+    font-family: Helvetica Neue, Gill Sans, sans-serif;
+}
+
+h1 {
+    font-size: 4em;
+    margin-bottom: 1em;
+    margin-top: 0.5em;
 }
 
 h2 {
-    border-left: 0.8em solid #333;
-    margin-left: -1.6em;
-    padding-left: 0.8em;
+    font-size: 2em;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-bottom: 0.2em;
+    margin-top: 1em;
+}
+
+h4 {
+    font-size: 1em;
+    margin-bottom: 0.3em;
+    margin-top: 1em;
 }
 
 h3, h4, h5 {
-    color: #333;
-    border-bottom: 1px solid #333;
+    color: #555;
+}
+
+ul, ol {
+    padding-left: 1em;
+}
+
+p, ul, ol {
+    margin-top: 0em;
+    margin-bottom: 0.6em;
+}
+
+td {
+    padding: 0.3em;
 }
 
 .outline-3 {
@@ -47,35 +85,44 @@ h3, h4, h5 {
 }
 
 .todo  {
- color: red; 
+    color: red;
 }
 
 .done {
- color: green; 
+    color: green;
 }
 
 .timestamp {
- color: grey 
+    color: #aa9;
 }
 
 .timestamp-kwd {
- color: CadetBlue 
+    color: CadetBlue;
 }
 
 .tag {
- background-color:lightblue; font-weight:normal 
+    background-color: lightblue;
+    font-weight: normal;
 }
 
 .target {
- background-color: lavender; 
+    background-color: lavender;
 }
 
 pre {
-    
     font-size: 0.8em;
-    border: 1pt solid #AEBDCC;
-    background-color: #F3F5F7;
+    border: 1pt solid #ccb;
+    background-color: #ddc;
     padding: 5pt;
-    font-family: courier, monospace;
+    font-family: menlo, monaco, monospace;
+    margin: 0.3em;
+}
 
+dt, dd {
+    display: block;
+}
+
+dt {
+    float: left;
+    margin-right: 0.4em;
 }
