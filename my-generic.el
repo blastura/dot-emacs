@@ -1,5 +1,5 @@
 ;; Generics
-;; Time-stamp: "2009-07-17 15:47:50 anton"
+;; Time-stamp: "2009-10-10 11:33:05 anton"
 (server-start)
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
@@ -32,29 +32,13 @@
 (set-variable 'vc-path '("/opt/local/bin"))
 
 ;; Regex-tool
-(set-variable 'regex-tool-backend (quote perl))
+;; (set-variable 'regex-tool-backend (quote perl))
 
 ;; Mouse-scroll amount
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
 
 ;; Frame-title shows filename
 (setq frame-title-format '(multiple-frames "%b" "%b"))
-
-;; Compilation ;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq compilation-scroll-output t)
-(setq compilation-window-height 8)
-
-;; (setq compilation-finish-function
-;;       (lambda (buf str)
-;;         (let (comp-saved-window-configuration (current-window-configuration))
-;;           (if (string-match "exited abnormally" str)
-;;               ;;there were errors
-;;               (message "compilation errors, press C-x ` to visit")
-;;             ;;no errors, make the compilation window go away in 0.5 seconds
-;;             (run-at-time 0.5 nil '(set-window-configuration
-;;                                    comp-saved-window-configuration))
-;;             (message "NO COMPILATION ERRORS!")))))
-
 
 ;; Skeletons
 (global-set-key "'" 'skeleton-pair-insert-maybe)
@@ -74,9 +58,10 @@
 (global-set-key "\M-p" 'mark-paragraph)
 (global-set-key "\M-j" 'hippie-expand) ;dabbrev-expand)
 
-(setq hippie-expand-dabbrev-as-symbol nil)
+(setq hippie-expand-dabbrev-as-symbol t)
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
+        try-expand-dabbrev-visible
         try-expand-dabbrev
         try-expand-dabbrev-all-buffers
         try-expand-dabbrev-from-kill
@@ -223,7 +208,6 @@
 ;; Log-edit
 (add-hook 'log-edit-mode-hook 'flyspell-mode)
 
-
 ;; Buffers/files identical names
 ;; TODO : move
 (require 'uniquify)
@@ -231,6 +215,11 @@
 (setq uniquify-separator "|")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
+
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+  (fill-paragraph nil)))
 
 
 (provide 'my-generic)

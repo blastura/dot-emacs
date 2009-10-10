@@ -16,6 +16,24 @@
 
 (set-variable 'org-export-html-style
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"/Users/anton/.emacs.d/org-mode.css\" />")
+
+;; (defun process-file (file)
+;;    "Read the contents of a file into a temp buffer and then do
+;;  something there."
+;;    (when (file-readable-p file)
+;;      (with-temp-buffer
+;;        (insert-file-contents file)
+;;        (goto-char (point-min))
+;;        (while (not (eobp))
+;;        ;; do something here with buffer content
+;;          (forward-line)))))
+
+;; (set-variable 'org-export-html-style
+;;               "<link rel=\"stylesheet\" type=\"text/css\">"
+              
+;;               ~/.emacs.d/org-mode.css
+;;               "</link>")
+
 (set-variable 'org-export-with-section-numbers nil)
 
 ;; Clocking

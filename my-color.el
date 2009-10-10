@@ -1,5 +1,5 @@
 ;; Color and style
-;; Time-stamp: "2009-09-15 08:43:47 anton"
+;; Time-stamp: "2009-10-10 14:57:38 anton"
 
 (when window-system
   (require 'highlight-current-line)
@@ -34,7 +34,20 @@
   (setq truncate-lines t)
   (highlight-current-line-set-bg-color "grey11")
   (color-theme-tango))
+
+(defun my-code-mode-light()
+  (interactive)
+  (set-default-font "-apple-menlo-medium-r-normal--11-0-72-72-m-0-iso10646-1" nil)
+  (setq truncate-lines t)
+  (color-theme-jsc-light2)
   
+  ;; Some changes
+  (highlight-current-line-on t)
+  (highlight-current-line-set-bg-color "#ddddcc")
+  (set-background-color "#eeeedd")
+  (custom-set-faces
+   ;;'(dired-directory ((t (:foreground "#008800"))))
+   '(dired-directory ((t (:inherit font-lock-string-face))))))
 
 (defun my-text-mode()
   (interactive)

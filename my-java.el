@@ -34,10 +34,11 @@
 
 (defun my-jde-mode-hook ()
   (set-variable 'senator-minor-mode-hook nil)
+  (semantic-idle-summary-mode 0)
   (setq jde-enable-abbrev-mode nil)
   (setq jde-gen-cflow-enable nil)
   (local-set-key (kbd "C-<return>") 'jde-build)
-  
+
   (local-set-key "'" 'skeleton-pair-insert-maybe)
   (local-set-key "\"" 'skeleton-pair-insert-maybe)
   (local-set-key "[" 'skeleton-pair-insert-maybe)
@@ -45,7 +46,7 @@
   (local-set-key "{" 'skeleton-pair-insert-maybe)
   (set-variable 'skeleton-pair t)
   (setq fill-column 80)
-  (setq c-basic-offset 4);; Tab indent 4 spaces
+  (setq c-basic-offset 4) ;; Tab indent 4 spaces
   ;;(c-set-offset 'inline-open 0)
   (abbrev-mode nil)
   (flymake-mode t)
@@ -86,7 +87,7 @@ is defined.
          (point-end (string-match pattern out-string point-start))
          (class-string (substring out-string point-start point-end)))
     (split-string  class-string ":")))
-  
+
 ;; Other java
 (defun java-compile()
   "comiles current buffer with javac"
@@ -119,11 +120,31 @@ Runs current buffer with java"
                   "}\n"))
   (mark-whole-buffer)
   (indent-region (region-beginning) (region-end) nil)
-;;(jdok-generate-javadoc-template)
+  ;;(jdok-generate-javadoc-template)
   (goto-line 1)
   (insert (concat "/*\n"
                   " * @(#)" (buffer-name) "\n"
                   " * Time-stamp: \"" (format-time-string "%c") "\"\n"
                   " */\n\n")))
 
+;; complete
+;; From http://blog.tuxicity.se/?p=137
+(defun jde-complete-ido ()
+  "Custom method completion for JDE using ido-mode and yasnippet."
+  (interactive)
+  (let ((completion-list '()) (variable-at-point (jde-parse-java-variable-at-point)))
+    (dolist (element (jde-complete-find-completion-for-pair variable-at-point nil) nil)
+      (add-to-list 'completion-list (cdr element)))
+    (if completion-list
+        (let ((choise (ido-completing-read "> " completion-list nil nil (car (cdr variable-at-point)))) (method))
+          (unless (string-match "^.*()$" choise)
+            (setq method (replace-regexp-in-string ")" "})"(replace-regexp-in-string ", " "}, ${" (replace-regexp-in-string "(" "(${" choise)))))
+          (delete-region (point) (re-search-backward "\\." (line-beginning-position)))
+          (insert ".")
+          (if method
+              (yas/expand-snippet (point) (point) method)
+            (insert choise)))
+      (message "No completions at this point"))))
+
+(setq jde-complete-function 'jde-complete-ido)
 (provide 'my-java)

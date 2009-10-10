@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2009-09-20 19:14:13 anton"
+;; Time-stamp: "2009-10-06 09:46:31 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -10,12 +10,6 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/magit"))
-
-;; JDE load paths
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/cedet/common"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/ecb"))
 
 ;; Modes
 (require 'flymake)
@@ -41,23 +35,24 @@
 (require 'my-flymake)
 (require 'my-flymake-c)
 (require 'my-flymake-css)
-(require 'my-python)
+(require 'my-anything)
+(require 'my-compilation)
+;;(require 'my-python)
 ;; (require 'anything-match-plugin)
 ;; (set-variable 'anything-mp-highlight-delay nil)
-
 ;;(require 'fuzzy-match)
-(require 'my-anything)
 
 (autoload 'git-blame-mode "git-blame"
   "Minor mode for incremental blame for Git." t)
 
 (load-file "~/.emacs.d/lisp/graphviz-dot-mode.el")
 
-(load-file "~/.emacs.d/lisp/cedet/common/cedet.el")
+;; JDE ;; CEDET needs to be loaded first
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/cedet-1.0pre6/common"))
 (require 'my-cedet)
-(make-directory "~/.emacs.d/semanticCache" t)
-(setq semanticdb-default-save-directory "~/.emacs.d/semanticCache")
-
+;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/ecb-2.40"))
 (require 'ecb-autoloads)
 (require 'jde)
 (require 'my-java)
@@ -77,6 +72,7 @@
 (require 'rst)
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 
+;; Yasnippet
 (require 'yasnippet)
 (yas/load-directory "~/.emacs.d/my-snippets")
 (add-to-list 'yas/extra-mode-hooks
