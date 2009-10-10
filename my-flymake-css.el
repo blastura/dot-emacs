@@ -1,4 +1,5 @@
-(defconst css-validator "/Users/anton/bin/css-validator")
+;; http://jigsaw.w3.org/css-validator/DOWNLOAD.html
+(defconst css-validator (expand-file-name "~/bin/css-validator"))
 
 (defun flymake-css-init ()
   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
