@@ -1,0 +1,4 @@
+#contributor : anton.johansson@gmail.com
+#name : <?xml version="..." encoding="..."?>
+# --
+<?xml version="${1:1.0}" encoding="${2:utf-8}"?>$0

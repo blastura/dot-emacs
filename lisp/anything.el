@@ -1,5 +1,5 @@
-;;; anything.el --- open anything / QuickSilver-like candidate-selection framework
-;; $Id: anything.el,v 1.171 2009/03/09 18:49:44 rubikitch Exp $
+;;;; anything.el --- open anything / QuickSilver-like candidate-selection framework
+;; $Id: anything.el,v 1.207 2009/10/16 19:47:39 rubikitch Exp rubikitch $
 
 ;; Copyright (C) 2007        Tamas Patrovics
 ;;               2008, 2009  rubikitch <rubikitch@ruby-lang.org>
@@ -47,6 +47,85 @@
 ;; many tips to write smart sources!
 ;;
 ;; http://www.emacswiki.org/cgi-bin/emacs/RubikitchAnythingConfiguration
+;;
+;; Here is Japanese translation of `anything-sources' attributes. Thanks.
+;; http://d.hatena.ne.jp/sirocco634/20091012/1255336649
+
+;;; Commands:
+;;
+;; Below are complete command list:
+;;
+;;  `anything'
+;;    Select anything. In Lisp program, some optional arguments can be used.
+;;  `anything-resume'
+;;    Resurrect previously invoked `anything'.
+;;  `anything-at-point'
+;;    Same as `anything' except when C-u is pressed, the initial input is the symbol at point.
+;;  `anything-select-action'
+;;    Select an action for the currently selected candidate.
+;;  `anything-previous-line'
+;;    Move selection to the previous line.
+;;  `anything-next-line'
+;;    Move selection to the next line.
+;;  `anything-previous-page'
+;;    Move selection back with a pageful.
+;;  `anything-next-page'
+;;    Move selection forward with a pageful.
+;;  `anything-previous-source'
+;;    Move selection to the previous source.
+;;  `anything-next-source'
+;;    Move selection to the next source.
+;;  `anything-exit-minibuffer'
+;;    Select the current candidate by exiting the minibuffer.
+;;  `anything-delete-current-selection'
+;;    Delete the currently selected item.
+;;  `anything-delete-minibuffer-content'
+;;    Same as `delete-minibuffer-contents' but this is a command.
+;;  `anything-select-2nd-action'
+;;    Select the 2nd action for the currently selected candidate.
+;;  `anything-select-3rd-action'
+;;    Select the 3rd action for the currently selected candidate.
+;;  `anything-select-4th-action'
+;;    Select the 4th action for the currently selected candidate.
+;;  `anything-select-2nd-action-or-end-of-line'
+;;    Select the 2nd action for the currently selected candidate if the point is at the end of minibuffer.
+;;  `anything-execute-persistent-action'
+;;    If a candidate is selected then perform the associated action without quitting anything.
+;;  `anything-scroll-other-window'
+;;    Scroll other window (not *Anything* window) upward.
+;;  `anything-scroll-other-window-down'
+;;    Scroll other window (not *Anything* window) downward.
+;;  `anything-quit-and-find-file'
+;;    Drop into `find-file' from `anything' like `iswitchb-find-file'.
+;;  `anything-yank-selection'
+;;    Set minibuffer contents to current selection.
+;;  `anything-kill-selection-and-quit'
+;;    Store current selection to kill ring.
+;;  `anything-follow-mode'
+;;    If this mode is on, persistent action is executed everytime the cursor is moved.
+;;  `anything-isearch'
+;;    Start incremental search within results. (UNMAINTAINED)
+;;  `anything-isearch-printing-char'
+;;    Add printing char to the pattern.
+;;  `anything-isearch-again'
+;;    Search again for the current pattern
+;;  `anything-isearch-delete'
+;;    Undo last event.
+;;  `anything-isearch-default-action'
+;;    Execute the default action for the selected candidate.
+;;  `anything-isearch-select-action'
+;;    Choose an action for the selected candidate.
+;;  `anything-isearch-cancel'
+;;    Cancel Anything isearch.
+;;  `anything-iswitchb-setup'
+;;    Integrate anything completion into iswitchb (UNMAINTAINED).
+;;  `anything-iswitchb-cancel-anything'
+;;    Cancel anything completion and return to standard iswitchb.
+;;
+;;; Customizable Options:
+;;
+;; Below are customizable option list:
+;;
 
 ;; You can extend `anything' by writing plug-ins. As soon as
 ;; `anything' is invoked, `anything-sources' is compiled into basic
@@ -66,7 +145,7 @@
 ;;
 ;; http://www.emacswiki.org/cgi-bin/emacs/AnythingPlugins
 
-;; Tested on Emacs 22.
+;; Tested on Emacs 22/23.
 ;;
 ;;
 ;; Thanks to Vagn Johansen for ideas.
@@ -242,6 +321,128 @@
 
 ;; (@* "HISTORY")
 ;; $Log: anything.el,v $
+;; Revision 1.207  2009/10/16 19:47:39  rubikitch
+;; Link to Japanese translation of `anything-sources' attributes. (No code change)
+;;
+;; Revision 1.206  2009/10/10 09:28:54  rubikitch
+;; Remove an unnecessary test
+;;
+;; Revision 1.205  2009/10/10 06:21:28  rubikitch
+;; obsolete: `anything-c-marked-candidate-list'
+;; New function: `anything-marked-candidates'
+;;
+;; Revision 1.204  2009/10/06 21:01:12  rubikitch
+;; Call `anything-process-delayed-sources' only if delayed-sources is available.
+;;
+;; Revision 1.203  2009/10/02 10:04:07  rubikitch
+;; Tested on Emacs23 too. (no code change)
+;;
+;; Revision 1.202  2009/10/02 10:03:34  rubikitch
+;; * Display "no candidates" rather than assertion
+;; * Ensure to call `remove-hook' in `anything-current-buffer'
+;;
+;; Revision 1.201  2009/08/08 13:25:30  rubikitch
+;; `anything-toggle-visible-mark': move next line after unmarking
+;;
+;; Revision 1.200  2009/08/08 13:23:46  rubikitch
+;; `anything-toggle-visible-mark': Applied ThierryVolpiatto's patch. thx.
+;;
+;; Revision 1.199  2009/07/19 13:22:29  rubikitch
+;; `anything-follow-execute-persistent-action-maybe': execute persistent action after `anything-input-idle-delay'
+;;
+;; Revision 1.198  2009/07/06 15:22:48  rubikitch
+;; header modified (no code change)
+;;
+;; Revision 1.197  2009/06/29 15:10:13  rubikitch
+;; OOPS! remove debug code
+;;
+;; Revision 1.196  2009/06/29 13:29:25  rubikitch
+;; anything-follow-mode: automatical execution of persistent-action (C-c C-f)
+;;
+;; Revision 1.195  2009/06/19 14:42:57  rubikitch
+;; silence byte compiler
+;;
+;; Revision 1.194  2009/06/14 15:12:34  rubikitch
+;; typo
+;;
+;; Revision 1.193  2009/06/08 19:37:12  rubikitch
+;; typo!
+;;
+;; Revision 1.192  2009/06/08 19:36:39  rubikitch
+;; New keybind: C-e, C-j, C-k
+;;
+;; Revision 1.191  2009/06/08 19:30:27  rubikitch
+;; New command: `anything-select-2nd-action-or-end-of-line'
+;;
+;; Revision 1.190  2009/06/07 17:09:50  rubikitch
+;; add M-<next>, C-M-S-v, M-<prior> to `anything-map'.
+;;
+;; Revision 1.189  2009/06/01 21:36:31  rubikitch
+;; New function: `anything-other-buffer'
+;;
+;; Revision 1.188  2009/05/29 18:33:07  rubikitch
+;; avoid error when executing (anything-mark-current-line) in async process.
+;;
+;; Revision 1.187  2009/05/29 06:49:05  rubikitch
+;; small refactoring
+;;
+;; Revision 1.186  2009/05/29 06:46:34  rubikitch
+;; Prevent `anything-isearch-map' from overwriting `global-map'. With
+;; `copy-keymap', the prefix command "M-s" in `global-map' ends up
+;; getting clobbered by `anything-isearch-again', preventing `occur'
+;; (among other things) from running. This change replaces overwriting a
+;; copied map with writing to a sparse map whose parent is `global-map'.
+;;
+;; patched by DanielHackney. thanks!
+;;
+;; Revision 1.185  2009/05/25 19:07:42  rubikitch
+;; `anything': set `case-fold-search' to t
+;; Because users can assign commands to capital letter keys.
+;;
+;; Revision 1.184  2009/05/25 19:05:04  rubikitch
+;; Added auto-document
+;;
+;; Revision 1.183  2009/05/15 01:50:46  rubikitch
+;; typo
+;;
+;; Revision 1.182  2009/05/08 18:28:18  rubikitch
+;; Bug fix: `anything-attr' is usable in `header-name' function.
+;;
+;; Revision 1.181  2009/05/04 19:05:03  rubikitch
+;; * `anything-yank-selection' and `anything-kill-selection-and-quit' handles display string now.
+;; * `anything-get-selection': Added optional arguments.
+;;
+;; Revision 1.180  2009/05/03 19:03:34  rubikitch
+;; Add `anything-input' to `minibuffer-history' even if `anything' is quit.
+;;
+;; Revision 1.179  2009/04/20 16:35:44  rubikitch
+;; New keybindings in anything-map:
+;;   C-c C-d: `anything-delete-current-selection'
+;;   C-c C-y: `anything-yank-selection'
+;;   C-c C-k: `anything-kill-selection-and-quit'
+;;
+;; Revision 1.178  2009/04/20 16:18:58  rubikitch
+;; New variable: `anything-display-function'
+;;
+;; Revision 1.177  2009/04/20 02:17:16  rubikitch
+;; New commands: `anything-yank-selection', `anything-kill-selection-and-quit'
+;;
+;; Revision 1.176  2009/04/08 14:48:15  rubikitch
+;; bug fix in `anything-candidate-buffer'
+;;
+;; Revision 1.175  2009/03/22 19:10:37  rubikitch
+;; New Variable: `anything-scroll-amount' (thx. ThierryVolpiatto)
+;;
+;; Revision 1.174  2009/03/12 19:12:24  rubikitch
+;; New API: `define-anything-type-attribute'
+;;
+;; Revision 1.173  2009/03/11 08:10:32  rubikitch
+;; Update doc
+;;
+;; Revision 1.172  2009/03/10 17:11:58  rubikitch
+;; `candidate-transformer', `filtered-candidate-transformer',
+;; `action-transformer' attributes: accept a list of functions
+;;
 ;; Revision 1.171  2009/03/09 18:49:44  rubikitch
 ;; New command: `anything-quit-and-find-file'
 ;;
@@ -792,7 +993,7 @@
 ;; New maintainer.
 ;;
 
-(defvar anything-version "$Id: anything.el,v 1.171 2009/03/09 18:49:44 rubikitch Exp $")
+(defvar anything-version "$Id: anything.el,v 1.207 2009/10/16 19:47:39 rubikitch Exp rubikitch $")
 (require 'cl)
 
 ;; (@* "User Configuration")
@@ -972,11 +1173,12 @@ Attributes:
 
 - candidate-transformer (optional)
 
-  It's a function called with one argument when the completion
-  list from the source is built. The argument is the list of
-  candidates retrieved from the source. The function should
-  return a transformed list of candidates which will be used for
-  the actual completion.
+  It's a function or a list of functions called with one argument
+  when the completion list from the source is built. The argument
+  is the list of candidates retrieved from the source. The
+  function should return a transformed list of candidates which
+  will be used for the actual completion.  If it is a list of
+  functions, it calls each function sequentially.
 
   This can be used to transform or remove items from the list of
   candidates.
@@ -1016,9 +1218,11 @@ Attributes:
 
 - action-transformer (optional)
 
-  It's a function called with two arguments when the action list
-  from the source is assembled. The first argument is the list of
-  actions, the second is the current selection.
+  It's a function or a list of functions called with two
+  arguments when the action list from the source is
+  assembled. The first argument is the list of actions, the
+  second is the current selection.  If it is a list of functions,
+  it calls each function sequentially.
 
   The function should return a transformed action list.
 
@@ -1184,7 +1388,7 @@ Attributes:
   display candidates at the top of screen.")
 
 (defvar anything-candidate-number-limit 50
-  "*Do not show more candidates than this limit from inidividual
+  "*Do not show more candidates than this limit from individual
   sources. It is usually pointless to show hundreds of matches
   when the pattern is empty, because it is much simpler to type a
   few characters to narrow down the list of potential candidates.
@@ -1245,17 +1449,27 @@ See also `anything-set-source-filter'.")
     (define-key map (kbd "C-9") 'anything-select-with-digit-shortcut)
     (define-key map (kbd "C-i") 'anything-select-action)
     (define-key map (kbd "C-z") 'anything-execute-persistent-action)
-
+    (define-key map (kbd "C-e") 'anything-select-2nd-action-or-end-of-line)
+    (define-key map (kbd "C-j") 'anything-select-3rd-action)
     (define-key map (kbd "C-o") 'anything-next-source)
     (define-key map (kbd "C-M-v") 'anything-scroll-other-window)
+    (define-key map (kbd "M-<next>") 'anything-scroll-other-window)
     (define-key map (kbd "C-M-y") 'anything-scroll-other-window-down)
+    (define-key map (kbd "C-M-S-v") 'anything-scroll-other-window-down)
+    (define-key map (kbd "M-<prior>") 'anything-scroll-other-window-down)
     (define-key map (kbd "C-SPC") 'anything-toggle-visible-mark)
     (define-key map (kbd "M-[") 'anything-prev-visible-mark)
     (define-key map (kbd "M-]") 'anything-next-visible-mark)
+    (define-key map (kbd "C-k") 'anything-delete-minibuffer-content)
 
     (define-key map (kbd "C-s") 'anything-isearch)
     (define-key map (kbd "C-r") 'undefined)
     (define-key map (kbd "C-x C-f") 'anything-quit-and-find-file)
+
+    (define-key map (kbd "C-c C-d") 'anything-delete-current-selection)
+    (define-key map (kbd "C-c C-y") 'anything-yank-selection)
+    (define-key map (kbd "C-c C-k") 'anything-kill-selection-and-quit)
+    (define-key map (kbd "C-c C-f") 'anything-follow-mode)
 
     ;; the defalias is needed because commands are bound by name when
     ;; using iswitchb, so only commands having the prefix anything-
@@ -1271,7 +1485,8 @@ If you execute `anything-iswitchb-setup', some keys are modified.
 See `anything-iswitchb-setup-keys'.")
 
 (defvar anything-isearch-map
-  (let ((map (copy-keymap (current-global-map))))
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map (current-global-map))
     (define-key map (kbd "<return>") 'anything-isearch-default-action)
     (define-key map (kbd "<RET>") 'anything-isearch-default-action)
     (define-key map (kbd "C-i") 'anything-isearch-select-action)
@@ -1279,10 +1494,8 @@ See `anything-iswitchb-setup-keys'.")
     (define-key map (kbd "M-s") 'anything-isearch-again)
     (define-key map (kbd "<backspace>") 'anything-isearch-delete)
     ;; add printing chars
-    (let ((i 32))
-      (while (< i 256)
-        (define-key map (vector i) 'anything-isearch-printing-char)
-        (setq i (1+ i))))
+    (loop for i from 32 below 256 do
+          (define-key map (vector i) 'anything-isearch-printing-char))
     map)
   "Keymap for anything incremental search.")
 
@@ -1450,6 +1663,13 @@ This variable accepts a function, which is executed if no candidate.
 
 It is useful for `anything' applications.")
 
+(defvar anything-scroll-amount nil
+  "Scroll amount used by `anything-scroll-other-window' and `anything-scroll-other-window-down'.
+If you prefer scrolling line by line, set this value to 1.")
+
+(defvar anything-display-function 'anything-default-display-buffer
+  "Function to display *anything* buffer.
+It is `anything-default-display-buffer' by default, which affects `anything-samewindow'.")
 
 (put 'anything 'timid-completion 'disabled)
 
@@ -1600,14 +1820,18 @@ Attributes:
     (setq anything-compiled-sources
           (anything-compile-sources anything-sources anything-compile-source-functions)))))
 
-(defun* anything-get-selection (&optional (buffer anything-buffer))
-  "Return the currently selected item or nil."
+(defun* anything-get-selection (&optional (buffer nil buffer-s) (force-display-part))
+  "Return the currently selected item or nil.
+if BUFFER is nil or unspecified, use anything-buffer as default value.
+If FORCE-DISPLAY-PART is non-nil, return the display string."
+  (setq buffer (if (and buffer buffer-s) buffer anything-buffer))
   (unless (zerop (buffer-size (get-buffer buffer)))
     (with-current-buffer buffer
       (let ((selection
-             (or (get-text-property (overlay-start
-                                     anything-selection-overlay)
-                                    'anything-realvalue)
+             (or (and (not force-display-part)
+                      (get-text-property (overlay-start
+                                          anything-selection-overlay)
+                                         'anything-realvalue))
                  (buffer-substring-no-properties
                   (overlay-start anything-selection-overlay)
                   (1- (overlay-end anything-selection-overlay))))))
@@ -1621,7 +1845,8 @@ Attributes:
            (actions (assoc-default 'action source)))
 
       (anything-aif (assoc-default 'action-transformer source)
-          (funcall it actions (anything-get-selection))
+          ;; (funcall it actions (anything-get-selection))
+          (anything-composed-funcall-with-source source it actions (anything-get-selection))
         actions))))
 
 (defun anything-get-current-source ()
@@ -1637,7 +1862,7 @@ Attributes:
       (let* ((header-pos (anything-get-previous-header-pos))
              (source-name
               (save-excursion
-                (assert header-pos)
+                (or header-pos (error "No candidates"))
                 (goto-char header-pos)
                 (buffer-substring-no-properties
                  (line-beginning-position) (line-end-position)))))
@@ -1661,12 +1886,36 @@ Attributes:
   "Return non-nil when `anything-current-buffer' is modified since `anything' was invoked."
   (anything-buffer-is-modified anything-current-buffer))
 
+(defvar anything-quit nil)
 (defun anything-run-after-quit (function &rest args)
   "Perform an action after quitting `anything'.
 The action is to call FUNCTION with arguments ARGS."
   (setq anything-quit t)
   (apply 'run-with-idle-timer 0 nil function args)
   (anything-exit-minibuffer))
+
+(defun define-anything-type-attribute (type definition &optional doc)
+  "Register type attribute of TYPE as DEFINITION with DOC.
+DOC is displayed in `anything-type-attributes' docstring.
+
+Use this function is better than setting `anything-type-attributes' directly."
+  (anything-add-type-attribute type definition)
+  (and doc (anything-document-type-attribute type doc))
+  nil)
+
+(defvar anything-additional-attributes nil)
+(defun anything-document-attribute (attribute short-doc &optional long-doc)
+  "Register ATTRIBUTE documentation introduced by plug-in.
+SHORT-DOC is displayed beside attribute name.
+LONG-DOC is displayed below attribute name and short documentation."
+  (if long-doc
+      (setq short-doc (concat "(" short-doc ")"))
+    (setq long-doc short-doc
+          short-doc ""))
+  (add-to-list 'anything-additional-attributes attribute t)
+  (put attribute 'anything-attrdoc
+       (concat "- " (symbol-name attribute) " " short-doc "\n\n" long-doc "\n")))
+(put 'anything-document-attribute 'lisp-indent-function 2)
 
 ;; (@* "Core: tools")
 (defun anything-current-frame/window-configuration ()
@@ -1699,7 +1948,6 @@ It is used to check if candidate number is 0 or 1."
   (with-current-buffer anything-buffer
     (1- (line-number-at-pos (1- (point-max))))))
 
-(defvar anything-quit nil)
 (defmacro with-anything-quittable (&rest body)
   `(let (inhibit-quit)
      (condition-case v
@@ -1708,6 +1956,21 @@ It is used to check if candidate number is 0 or 1."
              (exit-minibuffer)
              (keyboard-quit)))))
 (put 'with-anything-quittable 'lisp-indent-function 0)
+
+(defun anything-compose (arg-lst func-lst)
+  "Call each function in FUNC-LST with the arguments specified in ARG-LST.
+The result of each function will be the new `car' of ARG-LST.
+
+This function allows easy sequencing of transformer functions."
+  (dolist (func func-lst)
+    (setcar arg-lst (apply func arg-lst)))
+  (car arg-lst))
+
+(defun anything-composed-funcall-with-source (source funcs &rest args)
+  (if (functionp funcs)
+      (apply 'anything-funcall-with-source source funcs args)
+    (apply 'anything-funcall-with-source
+           source (lambda (&rest args) (anything-compose args funcs)) args)))
 
 ;; (@* "Core: entry point")
 (defun anything (&optional any-sources any-input any-prompt any-resume any-preselect any-buffer)
@@ -1751,7 +2014,8 @@ already-bound variables. Yuck!
               ;; It is needed because `anything-source-name' is non-nil
               ;; when `anything' is invoked by action. Awful global scope.
               anything-source-name anything-in-persistent-action
-              anything-quit
+              anything-quit anything-follow-mode
+              (case-fold-search t)
               (anything-buffer (or any-buffer anything-buffer))
               (anything-sources (anything-normalize-sources any-sources)))
          
@@ -1763,10 +2027,7 @@ already-bound variables. Yuck!
             (anything-initialize))
           (setq anything-last-buffer anything-buffer)
           (when any-input (setq anything-input any-input anything-pattern any-input))
-          (if anything-samewindow
-              (switch-to-buffer anything-buffer)
-            (pop-to-buffer anything-buffer))                  
-
+          (anything-display-buffer anything-buffer)
           (unwind-protect
               (progn
                 (if any-resume (anything-mark-current-line) (anything-update))
@@ -1786,8 +2047,9 @@ already-bound variables. Yuck!
                          (read-string (or any-prompt "pattern: ")
                                       (if any-resume anything-pattern any-input))))))
             (anything-cleanup)
-            (remove-hook 'minibuffer-setup-hook 'anything-print-error-messages)
-            (remove-hook 'post-command-hook 'anything-check-minibuffer-input)
+            (with-current-buffer anything-current-buffer
+              (remove-hook 'minibuffer-setup-hook 'anything-print-error-messages)
+              (remove-hook 'post-command-hook 'anything-check-minibuffer-input))
             (anything-set-frame/window-configuration frameconfig))
           (unless anything-quit
             (unwind-protect
@@ -1796,6 +2058,7 @@ already-bound variables. Yuck!
                   (kill-buffer it))
               (run-hooks 'anything-after-action-hook)))))
     (quit
+     (setq minibuffer-history (cons anything-input minibuffer-history))
      (goto-char (car anything-current-position))
      (set-window-start (selected-window) (cdr anything-current-position))
      nil)))
@@ -1827,6 +2090,18 @@ already-bound variables. Yuck!
                         (if (featurep 'anything-match-plugin) " " ""))
               any-input)
             any-prompt any-resume any-preselect any-buffer))
+
+(defun anything-other-buffer (any-sources any-buffer)
+  "Simplified interface of `anything' with other `anything-buffer'"
+  (anything any-sources nil nil nil nil any-buffer))
+
+;; (@* "Core: Display *anything* buffer")
+(defun anything-display-buffer (buf)
+  "Display *anything* buffer."
+  (funcall anything-display-function buf))
+
+(defun anything-default-display-buffer (buf)
+  (funcall (if anything-samewindow 'switch-to-buffer 'pop-to-buffer) buf))
 
 ;; (@* "Core: initialize")
 (defun anything-initialize ()
@@ -1942,20 +2217,8 @@ Anything plug-ins are realized by this function."
    sources))  
 
 ;; (@* "Core: plug-in attribute documentation hack")
-(defvar anything-additional-attributes nil)
-(defun anything-document-attribute (attribute short-doc &optional long-doc)
-  "Register ATTRIBUTE documentation introduced by plug-in.
-SHORT-DOC is displayed beside attribute name.
-LONG-DOC is displayed below attribute name and short documentation."
-  (if long-doc
-      (setq short-doc (concat "(" short-doc ")"))
-    (setq long-doc short-doc
-          short-doc ""))
-  (add-to-list 'anything-additional-attributes attribute t)
-  (put attribute 'anything-attrdoc
-       (concat "- " (symbol-name attribute) " " short-doc "\n\n" long-doc "\n")))
-(put 'anything-document-attribute 'lisp-indent-function 2)
 
+;; `anything-document-attribute' is public API.
 (defadvice documentation-property (after anything-document-attribute activate)
   "Hack to display plug-in attributes' documentation as `anything-sources' docstring."
   (when (eq symbol 'anything-sources)
@@ -1967,8 +2230,6 @@ LONG-DOC is displayed below attribute name and short documentation."
 ;; (describe-variable 'anything-sources)
 ;; (documentation-property 'anything-sources 'variable-documentation)
 ;; (progn (ad-disable-advice 'documentation-property 'after 'anything-document-attribute) (ad-update 'documentation-property)) 
-
-
 
 ;; (@* "Core: all candidates")
 (defun anything-get-candidates (source)
@@ -1994,7 +2255,7 @@ SOURCE."
 (defun anything-transform-candidates (candidates source)
   "Transform CANDIDATES according to candidate transformers."
   (anything-aif (assoc-default 'candidate-transformer source)
-      (anything-funcall-with-source source it candidates)
+      (anything-composed-funcall-with-source source it candidates)
     candidates))
 
 
@@ -2084,7 +2345,7 @@ Cache the candidates if there is not yet a cached value."
 
                   (anything-aif (assoc-default 'filtered-candidate-transformer source)
                       (setq matches
-                            (anything-funcall-with-source source it matches source)))
+                            (anything-composed-funcall-with-source source it matches source)))
                   matches))))
     (if debug-on-error
         (funcall doit)
@@ -2188,12 +2449,13 @@ the current pattern."
           (dolist (source delayed-sources)
             (anything-process-source source))
         (anything-maybe-fit-frame)
-        (run-with-idle-timer (if (featurep 'xemacs)
-                                 0.1
-                               0)
-                             nil
-                             'anything-process-delayed-sources
-                             delayed-sources)))))
+        (when delayed-sources
+          (run-with-idle-timer (if (featurep 'xemacs)
+                                   0.1
+                                 0)
+                               nil
+                               'anything-process-delayed-sources
+                               delayed-sources))))))
 
 (defun anything-insert-match (match insert-function &optional real-to-display)
   "Insert MATCH into the anything buffer. If MATCH is a list then
@@ -2218,7 +2480,7 @@ the real value in a text property."
   (let ((name (assoc-default 'name source)))
     (anything-insert-header name
                             (anything-aif (assoc-default 'header-name source)
-                                (funcall it name)))))
+                                (anything-funcall-with-source source it name)))))
 
 (defun anything-insert-header (name &optional display-string)
   "Insert header of source NAME into the anything buffer."
@@ -2495,8 +2757,8 @@ UNIT and DIRECTION."
       (when (and anything-display-source-at-screen-top (eq unit 'source))
         (set-window-start (selected-window)
                           (save-excursion (forward-line -1) (point))))
-      (anything-mark-current-line))))
-
+      (when (anything-get-previous-header-pos)
+        (anything-mark-current-line)))))
 
 (defun anything-mark-current-line ()
   "Move selection overlay to current line."
@@ -2509,8 +2771,8 @@ UNIT and DIRECTION."
                           (and header-pos candidate-pos (< candidate-pos header-pos) candidate-pos)
                           header-pos
                           (point-max)))
-                  (1+ (line-end-position)))))
-
+                  (1+ (line-end-position))))
+  (anything-follow-execute-persistent-action-maybe))
 
 (defun anything-select-with-digit-shortcut ()
   (interactive)
@@ -2523,7 +2785,6 @@ UNIT and DIRECTION."
             (goto-char (overlay-start overlay))
             (anything-mark-current-line)
             (anything-exit-minibuffer))))))
-
 
 (defun anything-exit-minibuffer ()
   "Select the current candidate by exiting the minibuffer."
@@ -2638,11 +2899,37 @@ UNIT and DIRECTION."
            (when (eobp) (forward-line -1))))
     (anything-mark-current-line)))
 
+(defun anything-delete-minibuffer-content ()
+  "Same as `delete-minibuffer-contents' but this is a command."
+  (interactive)
+  (delete-minibuffer-contents))
+
 ;; (@* "Built-in plug-in: type")
 (defun anything-compile-source--type (source)
   (anything-aif (assoc-default 'type source)
       (append source (assoc-default it anything-type-attributes) nil)
     source))
+
+;; `define-anything-type-attribute' is public API.
+
+(defun anything-add-type-attribute (type definition)
+  (anything-aif (assq type anything-type-attributes)
+      (setq anything-type-attributes (delete it anything-type-attributes)))
+  (push (cons type definition) anything-type-attributes))
+
+(defvar anything-types nil)
+(defun anything-document-type-attribute (type doc)
+  (add-to-list 'anything-types type t)
+  (put type 'anything-typeattrdoc
+       (concat "- " (symbol-name type) "\n\n" doc "\n")))
+
+(defadvice documentation-property (after anything-document-type-attribute activate)
+  "Hack to display type attributes' documentation as `anything-type-attributes' docstring."
+  (when (eq symbol 'anything-type-attributes)
+    (setq ad-return-value
+          (concat ad-return-value "\n\n++++ Types currently defined ++++\n"
+                  (mapconcat (lambda (sym) (get sym 'anything-typeattrdoc))
+                             anything-types "\n")))))
 
 ;; (@* "Built-in plug-in: dummy")
 (defun anything-dummy-candidate (candidate source)
@@ -2811,8 +3098,12 @@ Acceptable values of CREATE-OR-BUFFER:
          buf)
     (when create-or-buffer
       (if (bufferp create-or-buffer)
-          (add-to-list 'anything-candidate-buffer-alist
-                       (cons anything-source-name create-or-buffer))
+          (setq anything-candidate-buffer-alist
+                (cons (cons anything-source-name create-or-buffer)
+                      (delete (assoc anything-source-name anything-candidate-buffer-alist)
+                              anything-candidate-buffer-alist)))
+        (add-to-list 'anything-candidate-buffer-alist
+                     (cons anything-source-name create-or-buffer))
         (when (eq create-or-buffer 'global)
           (loop for b in (buffer-list)
                 if (string-match (format "^%s" (regexp-quote gbufname)) (buffer-name b))
@@ -2857,8 +3148,21 @@ Acceptable values of CREATE-OR-BUFFER:
   (interactive)
   (anything-select-nth-action 3))
 
+(defun anything-select-2nd-action-or-end-of-line ()
+  "Select the 2nd action for the currently selected candidate if the point is at the end of minibuffer.
+Otherwise goto the end of minibuffer."
+  (interactive)
+  (if (eolp)
+      (anything-select-nth-action 1)
+    (end-of-line)))
 
 ;; (@* "Utility: Persistent Action")
+(defmacro with-anything-display-same-window (&rest body)
+  "Make `pop-to-buffer' and `display-buffer' display in the same window."
+  `(let ((display-buffer-function 'anything-persistent-action-display-buffer))
+     ,@body))
+(put 'with-anything-display-same-window 'lisp-indent-function 0)
+
 (defun* anything-execute-persistent-action (&optional (attr 'persistent-action))
   "If a candidate is selected then perform the associated action without quitting anything."
   (interactive)
@@ -2875,12 +3179,6 @@ Acceptable values of CREATE-OR-BUFFER:
              (anything-get-action))
          t)
         (run-hooks 'anything-after-persistent-action-hook)))))
-
-(defmacro with-anything-display-same-window (&rest body)
-  "Make `pop-to-buffer' and `display-buffer' display in the same window."
-  `(let ((display-buffer-function 'anything-persistent-action-display-buffer))
-     ,@body))
-(put 'with-anything-display-same-window 'lisp-indent-function 0)
 
 (defun anything-persistent-action-display-buffer (buf &optional not-this-window)
   "Make `pop-to-buffer' and `display-buffer' display in the same window in persistent action.
@@ -2911,11 +3209,15 @@ Otherwise ignores `special-display-buffer-names' and `special-display-regexps'."
 (defun anything-scroll-other-window ()
   "Scroll other window (not *Anything* window) upward."
   (interactive)
-  (anything-scroll-other-window-base 'scroll-up))
+  (anything-scroll-other-window-base (lambda ()
+                                       (interactive)
+                                       (scroll-up anything-scroll-amount))))
 (defun anything-scroll-other-window-down ()
   "Scroll other window (not *Anything* window) downward."
   (interactive)
-  (anything-scroll-other-window-base 'scroll-down))
+  (anything-scroll-other-window-base (lambda ()
+                                       (interactive)
+                                       (scroll-down anything-scroll-amount))))
 
 ;; (@* "Utility: Visible Mark")
 (defface anything-visible-mark
@@ -2934,20 +3236,68 @@ Otherwise ignores `special-display-buffer-names' and `special-display-regexps'."
   (setq anything-visible-mark-overlays nil))
 (add-hook 'anything-after-initialize-hook 'anything-clear-visible-mark)
 
+;; (defun anything-toggle-visible-mark ()
+;;   (interactive)
+;;   (with-anything-window
+;;     (anything-aif (loop for o in anything-visible-mark-overlays
+;;                         when (equal (line-beginning-position) (overlay-start o))
+;;                         do (return o))
+;;         ;; delete
+;;         (progn (delete-overlay it)
+;;                (delq it anything-visible-mark-overlays))
+;;       (let ((o (make-overlay (line-beginning-position) (1+ (line-end-position)))))
+;;         (overlay-put o 'face anything-visible-mark-face)
+;;         (overlay-put o 'source (assoc-default 'name (anything-get-current-source)))
+;;         (overlay-put o 'string (buffer-substring (overlay-start o) (overlay-end o)))
+;;         (add-to-list 'anything-visible-mark-overlays o)))))
+
+(defvar anything-c-marked-candidate-list nil
+  "[OBSOLETE] DO NOT USE!!")
+(defvar anything-marked-candidates nil
+  "Marked candadates. List of (source . real) pair.")
 (defun anything-toggle-visible-mark ()
   (interactive)
   (with-anything-window
-    (anything-aif (loop for o in anything-visible-mark-overlays
-                        when (equal (line-beginning-position) (overlay-start o))
-                        do (return o))
-        ;; delete
-        (progn (delete-overlay it)
-               (delq it anything-visible-mark-overlays))
-      (let ((o (make-overlay (line-beginning-position) (1+ (line-end-position)))))
-        (overlay-put o 'face anything-visible-mark-face)
-        (overlay-put o 'source (assoc-default 'name (anything-get-current-source)))
-        (overlay-put o 'string (buffer-substring (overlay-start o) (overlay-end o)))
-        (add-to-list 'anything-visible-mark-overlays o)))))
+    (let ((display (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
+          (source (anything-get-current-source))
+          (selection (anything-get-selection)))
+      (anything-aif (loop for o in anything-visible-mark-overlays
+                          when (equal (line-beginning-position) (overlay-start o))
+                          do   (return o))
+          ;; delete
+          (progn
+            (setq anything-c-marked-candidate-list
+                  (remove
+                   display anything-c-marked-candidate-list))
+            (setq anything-marked-candidates
+                  (remove
+                   (cons source selection)
+                   anything-marked-candidates))
+            (delete-overlay it)
+            (delq it anything-visible-mark-overlays))
+        (let ((o (make-overlay (line-beginning-position) (1+ (line-end-position)))))
+          (overlay-put o 'face anything-visible-mark-face)
+          (overlay-put o 'source (assoc-default 'name source))
+          (overlay-put o 'string (buffer-substring (overlay-start o) (overlay-end o)))
+          (add-to-list 'anything-visible-mark-overlays o)
+          (push display anything-c-marked-candidate-list)
+          (push (cons source selection) anything-marked-candidates)))
+      (anything-next-line))))
+
+(defun anything-marked-candidates ()
+  "Marked candidates (real value) of current source."
+  (loop with current-src = (anything-get-current-source)
+        for (source . real) in anything-marked-candidates
+        when (eq current-src source)
+        collect real))
+
+(defun anything-reset-marked-candidates ()
+  (setq anything-c-marked-candidate-list nil)
+  (setq anything-marked-candidates nil))
+
+(add-hook 'anything-after-initialize-hook 'anything-reset-marked-candidates)
+(add-hook 'anything-after-action-hook 'anything-reset-marked-candidates)
+
 (defun anything-revive-visible-mark ()
   (interactive)
   (with-current-buffer anything-buffer
@@ -2988,6 +3338,38 @@ Otherwise ignores `special-display-buffer-names' and `special-display-regexps'."
 This command is a simple example of `anything-run-after-quit'."
   (interactive)
   (anything-run-after-quit 'call-interactively 'find-file))
+
+;; (@* "Utility: Selection Paste")
+(defun anything-yank-selection ()
+  "Set minibuffer contents to current selection."
+  (interactive)
+  (delete-minibuffer-contents)
+  (insert (anything-get-selection nil t)))
+
+(defun anything-kill-selection-and-quit ()
+  "Store current selection to kill ring.
+You can paste it by typing C-y."
+  (interactive)
+  (anything-run-after-quit
+   (lambda (sel)
+     (kill-new sel)
+     (message "Killed: %s" sel))
+   (anything-get-selection nil t)))
+
+
+;; (@* "Utility: Automatical execution of persistent-action")
+(define-minor-mode anything-follow-mode
+  "If this mode is on, persistent action is executed everytime the cursor is moved."
+  nil " AFollow" :global t)
+
+(defun anything-follow-execute-persistent-action-maybe ()
+  "Execute persistent action after `anything-input-idle-delay' secs when `anything-follow-mode' is enabled."
+  (and anything-follow-mode
+       (sit-for anything-input-idle-delay)
+       (anything-window)
+       (anything-get-selection)
+       (save-excursion
+         (anything-execute-persistent-action))))
 
 ;; (@* "Utility: Incremental search within results (unmaintained)")
 
@@ -3253,7 +3635,7 @@ shown for the current iswitchb input.
 
 ESC cancels anything completion and returns to normal iswitchb.
 
-Some key bindings in `anything-map' is modified.
+Some key bindings in `anything-map' are modified.
 See also `anything-iswitchb-setup-keys'."
   (interactive)
 
@@ -3837,17 +4219,17 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
             (anything-test-candidates sources))))
       (expect '(("BAR" ("modified")))
         (let ((sources1 '(((name . "FOO")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified")))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified")))))))
               (sources2 '(((name . "BAR")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified"))))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified"))))))))
           (with-temp-buffer
             (clrhash anything-tick-hash)
             (insert "1")
@@ -3855,17 +4237,17 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
             (anything-test-candidates sources2))))
       (expect '(("FOO" ("unmodified")))
         (let ((sources1 '(((name . "FOO")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified")))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified")))))))
               (sources2 '(((name . "BAR")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified"))))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified"))))))))
           (with-temp-buffer
             (clrhash anything-tick-hash)
             (insert "1")
@@ -3874,17 +4256,17 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
             (anything-test-candidates sources1))))
       (expect '(("BAR" ("unmodified")))
         (let ((sources1 '(((name . "FOO")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified")))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified")))))))
               (sources2 '(((name . "BAR")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified"))))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified"))))))))
           (with-temp-buffer
             (clrhash anything-tick-hash)
             (insert "1")
@@ -3893,17 +4275,17 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
             (anything-test-candidates sources2))))
       (expect '(("BAR" ("modified")))
         (let ((sources1 '(((name . "FOO")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified")))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified")))))))
               (sources2 '(((name . "BAR")
-                          (candidates
-                           . (lambda ()
-                               (if (anything-current-buffer-is-modified)
-                                   '("modified")
-                                 '("unmodified"))))))))
+                           (candidates
+                            . (lambda ()
+                                (if (anything-current-buffer-is-modified)
+                                    '("modified")
+                                  '("unmodified"))))))))
           (with-temp-buffer
             (clrhash anything-tick-hash)
             (insert "1")
@@ -4039,6 +4421,16 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
             (anything-candidate-buffer buf)
             (prog1 (buffer-string)
               (kill-buffer (current-buffer))))))
+      (expect "buf1"
+        (let (anything-candidate-buffer-alist
+              (anything-source-name "foo")
+              (buf1 (get-buffer-create "buf1"))
+              (buf2 (get-buffer-create "buf2")))
+          (anything-candidate-buffer buf1)
+          (anything-candidate-buffer buf2)
+          (prog1 (buffer-name (anything-candidate-buffer buf1))
+            (kill-buffer buf1)
+            (kill-buffer buf2))))
       (desc "action attribute")
       (expect "foo"
         (anything-test-candidates
@@ -4308,15 +4700,6 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
         (stub anything-maybe-fit-frame)
         (let ((anything-pattern "") anything-test-mode)
           (anything-update)))
-
-      (expect (mock (run-with-idle-timer * nil 'anything-process-delayed-sources nil))
-        (stub anything-get-sources => '(((name . "1"))
-                                        ((name . "2"))))
-        (stub run-hooks)
-        (stub anything-maybe-fit-frame)
-        (let ((anything-pattern "") anything-test-mode)
-          (anything-update)))
-
 
       (desc "requires-pattern attribute")
       (expect (not-called anything-process-source)
@@ -4607,10 +4990,10 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
       (desc "header-name attribute")
       (expect "original is transformed"
         (anything-test-update '(((name . "original")
-                                         (candidates "1")
-                                         (header-name
-                                          . (lambda (name)
-                                              (format "%s is transformed" name)))))
+                                 (candidates "1")
+                                 (header-name
+                                  . (lambda (name)
+                                      (format "%s is transformed" name)))))
                               "")
         (with-current-buffer (anything-buffer-get)
           (buffer-string)
@@ -4732,6 +5115,75 @@ Given pseudo `anything-sources' and `anything-pattern', returns list like
          '(((name . "test")
             (candidates (sym . realsym) ("str" . "realstr"))))
          "str"))
+      (desc "multiple transformers")
+      (expect '(("test" ("<FOO>")))
+        (anything-test-candidates
+         '(((name . "test")
+            (candidates "foo")
+            (candidate-transformer
+             . (lambda (cands)
+                 (anything-compose (list cands)
+                                   (list (lambda (c) (mapcar 'upcase c))
+                                         (lambda (c) (list (concat "<" (car c) ">")))))))))))
+      (expect '("<FOO>")
+        (anything-composed-funcall-with-source
+         '((name . "test"))
+         (list (lambda (c) (mapcar 'upcase c))
+               (lambda (c) (list (concat "<" (car c) ">"))))
+         '("foo"))
+        )
+      (expect '(("test" ("<FOO>")))
+        (anything-test-candidates
+         '(((name . "test")
+            (candidates "foo")
+            (candidate-transformer
+             (lambda (c) (mapcar 'upcase c))
+             (lambda (c) (list (concat "<" (car c) ">"))))))))
+      (expect '(("test" ("<BAR>")))
+        (anything-test-candidates
+         '(((name . "test")
+            (candidates "bar")
+            (filtered-candidate-transformer
+             (lambda (c s) (mapcar 'upcase c))
+             (lambda (c s) (list (concat "<" (car c) ">"))))))))
+      (expect '(("find-file" . find-file)
+                ("view-file" . view-file))
+        (stub zerop => nil)
+        (stub anything-get-current-source
+              => '((name . "test")
+                   (action)
+                   (action-transformer
+                    . (lambda (a s)
+                        (anything-compose
+                         (list a s)
+                         (list (lambda (a s) (push '("view-file" . view-file) a))
+                               (lambda (a s) (push '("find-file" . find-file) a))))))))
+        (anything-get-action))
+      (expect '(("find-file" . find-file)
+                ("view-file" . view-file))
+        (stub zerop => nil)
+        (stub anything-get-current-source
+              => '((name . "test")
+                   (action)
+                   (action-transformer
+                    (lambda (a s) (push '("view-file" . view-file) a))
+                    (lambda (a s) (push '("find-file" . find-file) a)))))
+        (anything-get-action))
+      (desc "define-anything-type-attribute")
+      (expect '((file (action . find-file)))
+        (let (anything-type-attributes)
+          (define-anything-type-attribute 'file '((action . find-file)))
+          anything-type-attributes))
+      (expect '((file (action . find-file)))
+        (let ((anything-type-attributes '((file (action . view-file)))))
+          (define-anything-type-attribute 'file '((action . find-file)))
+          anything-type-attributes))
+      (expect '((file (action . find-file))
+                (buffer (action . switch-to-buffer)))
+        (let (anything-type-attributes)
+          (define-anything-type-attribute 'buffer '((action . switch-to-buffer)))
+          (define-anything-type-attribute 'file '((action . find-file)))
+          anything-type-attributes))
       )))
 
 

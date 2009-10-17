@@ -1,0 +1,5 @@
+#contributor : anton.johansson@gmail.com
+#name : \subsection{...}
+# --
+\subsection{${1:.}}\label{sec:$1}
+$0

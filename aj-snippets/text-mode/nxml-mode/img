@@ -1,0 +1,4 @@
+#contributor : Anton Johansson <anton.johansson@gmail.com>
+#name : <img src="..." alt="..." />
+# --
+<img src="$1" alt="$0" />

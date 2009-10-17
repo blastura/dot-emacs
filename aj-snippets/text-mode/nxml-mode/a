@@ -1,0 +1,4 @@
+#contributor : Anton Johansson <anton.johansson@gmail.com>
+#name : <a href="...">...</a>
+# --
+<a href="$1">$0</a>

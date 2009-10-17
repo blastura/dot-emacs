@@ -1,0 +1,7 @@
+#contributor: anton.johansson@gmail.com
+#name: toString()...
+# --
+@Override
+public String toString() {
+    return $0;
+}
