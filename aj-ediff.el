@@ -17,4 +17,4 @@
               (add-hook 'ediff-suspend-hook
                         restore-window-configuration 'append))))
 
-(provide 'my-ediff)
+(provide 'aj-ediff)

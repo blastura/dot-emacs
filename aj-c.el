@@ -1,4 +1,4 @@
-(defun my-c-mode-hook ()
+(defun aj-c-mode-hook ()
   (c-set-style "java")
   ;; Indent switch statement correctly
   (local-set-key "\C-c\C-o" 'ffap)
@@ -12,5 +12,5 @@
   (set-variable 'skeleton-pair t)
   
   (c-set-offset (quote case-label) (quote +)))
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(provide 'my-c)
+(add-hook 'c-mode-hook 'aj-c-mode-hook)
+(provide 'aj-c)

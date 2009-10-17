@@ -3,32 +3,32 @@
 (set-variable 'flymake-no-changes-timeout 0.5)
 ;;(set-variable 'flymake-start-syntax-check-on-newline nil)
 
-(defun my-flymake-restart-after-crach()
+(defun aj-flymake-restart-after-crach()
   (interactive)
   (setf compilation-in-progress nil))
 
-(defun my-flymake-mode-hook () 
+(defun aj-flymake-mode-hook () 
  (define-key (current-local-map) "\C-c\C-d" 'flymake-display-err-menu-for-current-line)
- (define-key (current-local-map) "\C-c\C-n" 'my-flymake-show-next-error)
- (define-key (current-local-map) "\C-c\C-p" 'my-flymake-show-prev-error)
- (define-key (current-local-map) "\C-c\C-f" 'my-flymake-display-err-minibuf))
-(add-hook 'flymake-mode-hook 'my-flymake-mode-hook)
+ (define-key (current-local-map) "\C-c\C-n" 'aj-flymake-show-next-error)
+ (define-key (current-local-map) "\C-c\C-p" 'aj-flymake-show-prev-error)
+ (define-key (current-local-map) "\C-c\C-f" 'aj-flymake-display-err-minibuf))
+(add-hook 'flymake-mode-hook 'aj-flymake-mode-hook)
 
 (custom-set-faces
  '(flymake-errline ((((class color)) (:underline "OrangeRed"))))
  '(flymake-warnline ((((class color)) (:underline "yellow")))))
 
-(defun my-flymake-show-next-error()
+(defun aj-flymake-show-next-error()
   (interactive)
   (flymake-goto-next-error)
-  (my-flymake-display-err-minibuf))
+  (aj-flymake-display-err-minibuf))
 
-(defun my-flymake-show-prev-error()
+(defun aj-flymake-show-prev-error()
   (interactive)
   (flymake-goto-prev-error)
-  (my-flymake-display-err-minibuf))
+  (aj-flymake-display-err-minibuf))
 
-(defun my-flymake-display-err-minibuf () 
+(defun aj-flymake-display-err-minibuf () 
   "Displays the error/warning for the current line in the minibuffer"
   (interactive)
   (let* ((line-no             (flymake-current-line-no))
@@ -43,4 +43,4 @@
           (message "[%s] %s" line text)))
       (setq count (1- count)))))
 
-(provide 'my-flymake)
+(provide 'aj-flymake)

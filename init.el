@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2009-10-06 09:46:31 anton"
+;; Time-stamp: "2009-10-17 19:18:27 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -10,6 +10,9 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/magit"))
+
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/lisp/auto-install/")
 
 ;; Modes
 (require 'flymake)
@@ -22,23 +25,25 @@
 
 ;; Personal customizations
 ;;(require 'slime)
-(require 'my-generic)
-(require 'my-ediff)
-(require 'my-color)
-(require 'my-html)
-(require 'my-latex)
-(require 'my-irc)
-(require 'my-org)
-(require 'my-octave)
-(require 'my-mac)
-(require 'my-c)
-(require 'my-flymake)
-(require 'my-flymake-c)
-(require 'my-flymake-css)
-(require 'my-anything)
-(require 'my-compilation)
-;;(require 'my-python)
-;; (require 'anything-match-plugin)
+(require 'aj-generic)
+(require 'aj-ediff)
+(require 'aj-color)
+(require 'aj-html)
+(require 'aj-latex)
+(require 'aj-irc)
+(require 'aj-org)
+(require 'aj-octave)
+(require 'aj-mac)
+(require 'aj-c)
+(require 'aj-flymake)
+(require 'aj-flymake-c)
+(require 'aj-flymake-css)
+(require 'aj-anything)
+(require 'aj-compilation)
+(require 'aj-ido)
+(require 'aj-term)
+;;(requireaj 'my-python)
+;; (requiraje 'anything-match-plugin)
 ;; (set-variable 'anything-mp-highlight-delay nil)
 ;;(require 'fuzzy-match)
 
@@ -50,12 +55,12 @@
 ;; JDE ;; CEDET needs to be loaded first
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/cedet-1.0pre6/common"))
-(require 'my-cedet)
-;;(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib"))
+(require 'aj-cedet)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib-1.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/ecb-2.40"))
 (require 'ecb-autoloads)
 (require 'jde)
-(require 'my-java)
+(require 'aj-java)
 
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
@@ -66,7 +71,7 @@
 
 ;; Other customizations
 (load "/Applications/Emacs.app/Contents/Resources/site-lisp/nxml-mode/rng-auto.el")
-(require 'my-nxml)
+(require 'aj-nxml)
 ;;(load "~/.emacs.d/lisp/nxhtml/autostart.el")
 
 (require 'rst)
@@ -74,7 +79,7 @@
 
 ;; Yasnippet
 (require 'yasnippet)
-(yas/load-directory "~/.emacs.d/my-snippets")
+(yas/load-directory "~/.emacs.d/aj-snippets")
 (add-to-list 'yas/extra-mode-hooks
              'rst-mode-hook)
 
@@ -110,4 +115,6 @@
 
 ;; Turn of debug
 (setq debug-on-error nil)
+;; Start server
+(server-start)
 (message "loaded init.el")

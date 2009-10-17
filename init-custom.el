@@ -6,15 +6,13 @@
  '(Man-notify-method (quote pushy))
  '(aquamacs-additional-fontsets nil t)
  '(aquamacs-customization-version-id 182 t)
- '(default-frame-alist (quote ((tool-bar-lines . 0) (mouse-color . "black") (foreground-color . "black") (cursor-color . "red") (border-color . "#888a85") (background-mode . light) (background-color . "white") (menu-bar-lines . 1) (cursor-type . box) (vertical-scroll-bars) (internal-border-width . 0) (left-fringe . 1) (right-fringe) (fringe) (vc-annotate-very-old-color . "#0046FF") (senator-eldoc-use-color . t))))
  '(ecb-options-version "2.40")
  '(jde-jdk (quote ("1.6")))
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6"))))
  '(mac-option-modifier nil)
  '(org-agenda-files (quote ("~/Documents/org/notes.org")))
  '(paren-match-face (quote paren-face-match-light))
- '(paren-sexp-mode t)
- '(transient-mark-mode t))
+ '(paren-sexp-mode t))
  
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -29,6 +27,11 @@
  '(flyspell-incorrect ((t (:underline "OrangeRed"))))
  '(font-latex-bold-face ((t (:weight bold))))
  '(font-latex-italic-face ((t (:slant italic))))
+ '(ido-first-match ((t (:foreground "blue" :weight bold))))
  '(ido-first-match-face ((t (:background "green"))))
- '(paren-face-match-light ((t (:background "grey1"))))
+ '(ido-only-match ((t (:inherit font-lock-string-face :weight bold))))
+ '(org-hide ((t (:foreground "grey"))))
  '(paren-match ((t (:background "grey1")))))
+
+
+;; '(default-frame-alist (quote ((tool-bar-lines . 0) (mouse-color . "black") (foreground-color . "black") (cursor-color . "red") (border-color . "#888a85") (background-mode . light) (background-color . "#eeeedd") (menu-bar-lines . 1) (cursor-type . box) (vertical-scroll-bars) (internal-border-width . 0) (left-fringe . 1) (right-fringe) (fringe) (vc-annotate-very-old-color . "#0046FF") (senator-eldoc-use-color . t))))

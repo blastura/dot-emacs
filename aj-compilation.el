@@ -14,4 +14,4 @@
 (setq compilation-scroll-output t)
 ;;(setq compilation-window-height nil)
 
-(provide 'my-compilation)
+(provide 'aj-compilation)

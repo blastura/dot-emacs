@@ -1,6 +1,5 @@
 (set-variable 'anything-c-adaptive-history-file "~/.emacs.d/autosave/anything-c-adaptive-history-file")
 
-
 ;; Choose from ./lisp/anything-config.el
 (setq anything-sources
       '(anything-c-source-ffap-guesser
@@ -23,7 +22,7 @@
         ;;anything-c-source-buffer-not-found
         ))
 
-(provide 'my-anything)
+(provide 'aj-anything)
 
 ;; Original
 ;; (anything-c-source-ffap-guesser

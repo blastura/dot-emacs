@@ -13,4 +13,4 @@
 
 (push '("^file:\\([^:]+\\):\\([^:]+\\):\\(.*\\)" 1 2 nil 3) flymake-err-line-patterns)
 
-(provide 'my-flymake-css)
+(provide 'aj-flymake-css)

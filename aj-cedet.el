@@ -8,4 +8,4 @@
 (make-directory "~/.emacs.d/semanticCache" t)
 (setq semanticdb-default-save-directory "~/.emacs.d/semanticCache")
 
-(provide 'my-cedet)
+(provide 'aj-cedet)

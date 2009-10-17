@@ -1,5 +1,5 @@
 ;; Html, xml
-;; Time-stamp: "2008-12-05 00:23:25 anton"
+;; Time-stamp: "2009-10-17 19:03:20 anton"
 
 (add-to-list 'auto-mode-alist
              (cons (concat "\\." (regexp-opt '("html" "xhtml" "xml" "xsd" "sch" "rng" "xslt" "svg" "rss") t) "\\'")
@@ -13,9 +13,9 @@
 (fset 'xml-mode 'nxml-mode)
 (fset 'html-mode 'nxml-mode)
 
-(defun my-nxml-mode-hook()
+(defun aj-nxml-mode-hook()
   (setq truncate-lines t))
-(add-hook 'nxml-mode-hook 'my-nxml-mode-hook)
+(add-hook 'nxml-mode-hook 'aj-nxml-mode-hook)
 
 (defun insert-xhtml-template ()
   "inserts xhtml template"
@@ -44,7 +44,7 @@
   (search-forward "title>"))
 
 ;; Snatched from Benjamin Ferrari http://blog.bookworm.at/
-(defun my-nxml-pretty (begin end)
+(defun aj-nxml-pretty (begin end)
   "Pretty format XML markup in region. You need to have nxml-mode
 http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
 this.  The function inserts linebreaks to separate tags that have
@@ -59,4 +59,4 @@ by using nxml's indentation rules."
     (indent-region begin end))
   (message "Done!"))
 
-(provide 'my-html)
+(provide 'aj-html)

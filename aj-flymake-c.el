@@ -18,4 +18,4 @@
           '(lambda ()
              (flymake-mode t)))
 
-(provide 'my-flymake-c)
+(provide 'aj-flymake-c)

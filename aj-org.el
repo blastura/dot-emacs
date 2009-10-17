@@ -1,4 +1,4 @@
-(defun my-org-mode-hook()
+(defun aj-org-mode-hook()
   ;;(flyspell-mode t)
   ;;(ispell-change-dictionary "sv" nil)
   (auto-fill-mode 1)
@@ -6,8 +6,19 @@
   (local-set-key (kbd "C-<tab>") 'other-window)
   (local-set-key (kbd "C-S-<tab>") (lambda ()
                                      (interactive) (other-window -1))))
-(add-hook 'org-mode-hook 'my-org-mode-hook)
+(add-hook 'org-mode-hook 'aj-org-mode-hook)
 
+;; Custom
+(setq org-startup-folded t)
+(setq org-level-color-stars-only nil)
+(setq org-fontify-emphasized-text t)
+
+;; Hide leading stars face
+(setq org-hide-leading-stars t)
+(custom-set-faces
+ '(org-hide ((((background light)) (:foreground "dim gray"))
+             (((background dark)) (:foreground "dim gray")))))
+ 
 (setq org-directory "~/Documents/org")
 (setq org-default-notes-file "~/Documents/org/notes.org")
 ;;(setq remember-annotation-functions '(org-remember-annotation))
@@ -40,4 +51,4 @@
 (setq org-clock-history-length 35)
 
 
-(provide 'my-org)
+(provide 'aj-org)

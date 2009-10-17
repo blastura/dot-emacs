@@ -44,5 +44,5 @@
 ;;(require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 
-(message "my-python loaded")
-(provide 'my-python)
+(message "aj-python loaded")
+(provide 'aj-python)

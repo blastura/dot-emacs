@@ -12,4 +12,4 @@
 
 (push '("Line : \\([0-9]+\\)" nil 1 nil) flymake-err-line-patterns)
 
-(provide 'my-flymake-css)
+(provide 'aj-flymake-css)

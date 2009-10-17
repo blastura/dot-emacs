@@ -1,16 +1,13 @@
 ;; Generics
-;; Time-stamp: "2009-10-10 11:33:05 anton"
-(server-start)
+;; Time-stamp: "2009-10-17 19:03:21 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
 (setq truncate-lines t)
-(prefer-coding-system 'utf-8)
 (global-font-lock-mode t)
 (show-paren-mode t)
 (setq fill-column 80)
 (column-number-mode t)
-(add-hook 'before-save-hook 'time-stamp) ;; insert time-stamp before saves
 (setq visible-bell t)                    ;; disable audible bell
 (setq-default indent-tabs-mode nil)      ;; TAB ger mellanslag
 (setq default-tab-width 3)               ;; set tabs to 3 spaces
@@ -20,11 +17,16 @@
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (setq sentence-end-double-space nil)
-(setq dabbrev-abbrev-skip-leading-regexp "[^ ]*[<>=*]") ;; script <tags> when expanding
+(setq dabbrev-abbrev-skip-leading-regexp "[^ ]*[<>=*]") ;; skip <tags> when expanding
 
-;; Add color to a shell running in emacs ‘M-x shell’
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;; Coding system
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+;;(set-input-method nil)
 
 (setq exec-path (cons "/opt/local/bin" exec-path))
 (setenv "PATH" (concat "/opt/local/bin:/opt/local/sbin:"
@@ -98,6 +100,10 @@
 
 ;; Alias
 (defalias 'qrr 'query-replace-regexp)
+(defalias 'mkdir 'make-directory)
+(defun ls()
+  (interactive)
+  (shell-command "ls"))
 
 ;; GDB
 (setq gdb-many-windows t)
@@ -196,17 +202,9 @@
   (browse-url (concat "http://www.google.com/search?ie=utf-8&oe=utf-8&q=" (buffer-substring beg end))))
 
 ;; Open all existing files read-only
-;; (defun my-find-file-hook()
+;; (defun aj-find-file-hook()
 ;;   (toggle-read-only t))
-;; (add-hook 'find-file-hook 'my-find-file-hook)
-
-;; Make switching better with completions
-(ido-mode 1)
-(setq ido-enable-flex-matching t) ; fuzzy matching
-(setq ido-create-new-buffer 'always)
-
-;; Log-edit
-(add-hook 'log-edit-mode-hook 'flyspell-mode)
+;; (add-hook 'find-file-hook 'aj-find-file-hook)
 
 ;; Buffers/files identical names
 ;; TODO : move
@@ -221,5 +219,23 @@
   (let ((fill-column (point-max)))
   (fill-paragraph nil)))
 
+;; Hooks ;;;;;;;;;;;;;;;;;;;;;;;;
+;; Timestamp
+(add-hook 'before-save-hook 'time-stamp) ;; insert time-stamp before saves
 
-(provide 'my-generic)
+;; From sean @ http://emacsblog.org/2007/10/07/declaring-emacs-bankruptcy/
+(add-hook 'after-save-hook 'aj-recompile-el)
+(defun aj-recompile-el ()
+  (interactive)
+  (when (and buffer-file-name
+             (string-match "/.*\\.el$"  buffer-file-name)
+             (file-newer-than-file-p buffer-file-name
+                                     (concat buffer-file-name "c"))
+             (y-or-n-p (format "byte-compile %s? "
+                               (file-name-nondirectory (buffer-file-name)))))
+    (byte-compile-file buffer-file-name)))
+
+;; Log-edit
+(add-hook 'log-edit-mode-hook 'flyspell-mode)
+
+(provide 'aj-generic)

@@ -3,7 +3,7 @@
 
 ;; Flymake JDE
 
-(require 'my-flymake-java)
+(require 'aj-flymake-java)
 ;; Start eclipse compiler server
 ;; ================================
 ;; (require 'jde-eclipse-compiler-server)
@@ -32,7 +32,7 @@
 
 (set-variable 'jde-global-classpath '("./bin/main" "./bin/test" "./bin"))
 
-(defun my-jde-mode-hook ()
+(defun aj-jde-mode-hook ()
   (set-variable 'senator-minor-mode-hook nil)
   (semantic-idle-summary-mode 0)
   (setq jde-enable-abbrev-mode nil)
@@ -51,9 +51,9 @@
   (abbrev-mode nil)
   (flymake-mode t)
   (toggle-truncate-lines nil))
-(add-hook 'jde-mode-hook 'my-jde-mode-hook)
+(add-hook 'jde-mode-hook 'aj-jde-mode-hook)
 
-(defun my-ant-find-build-file (dir)
+(defun aj-ant-find-build-file (dir)
   "Find the next Ant build file upwards in the directory tree from DIR.
 Returns nil if it cannot find a project file in DIR or an
 ascendant directory.  The parameter dir should be an empty string
@@ -66,7 +66,7 @@ if check should be performed on current dir.
           (setq file (jde-ant-find-build-file (concat dir "../")))))
     file))
 
-(defun my-get-classpath()
+(defun aj-get-classpath()
   "To use in prj.el jde project files: (set-variable
 'jde-global-classpath (get-cp)) will search for build.xml with
 ant -find build.xml. Special target in build.xml must be defined:
@@ -80,7 +80,7 @@ Where project.classpath is the id of the tag path where classpath
 is defined.
 "
   ;; (message (concat "get-cp, dir is:  "(pwd)))
-  ;; (message (concat "get-cp, buildfile is:  " (my-ant-find-build-file "")))
+  ;; (message (concat "get-cp, buildfile is:  " (aj-ant-find-build-file "")))
   (let* ((pattern "-classpath-")
          (out-string (shell-command-to-string "ant -q -find build.xml print-classpath"))
          (point-start (+ (length pattern) (string-match pattern out-string)))
@@ -147,4 +147,4 @@ Runs current buffer with java"
       (message "No completions at this point"))))
 
 (setq jde-complete-function 'jde-complete-ido)
-(provide 'my-java)
+(provide 'aj-java)

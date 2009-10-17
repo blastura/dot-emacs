@@ -1,5 +1,5 @@
 ;; Irc
-;; Time-stamp: "2009-06-06 12:04:48 anton"
+;; Time-stamp: "2009-10-17 19:03:18 anton"
 
 (eval-after-load 'rcirc '(require 'rcirc-notify))
 (eval-after-load 'rcirc '(load "~/.rcirc-authinfo"))
@@ -39,4 +39,4 @@
                       rcirc-default-user-full-name
                       channels))))
 
-(provide 'my-irc)
+(provide 'aj-irc)

@@ -36,7 +36,7 @@
     
 (push '(".+\\.java$" flymake-java-ecj-init flymake-java-ecj-cleanup) flymake-allowed-file-name-masks)
 
-(provide 'my-flymake-java)
+(provide 'aj-flymake-java)
 
 ;; EOC
 
@@ -73,7 +73,7 @@
 ;; (push '("\\(.*?\\):\\([0-9]+\\): warning: \\(.*?\\)\n" 1 2 nil 1 3 (6 compilation-warning-face)) compilation-error-regexp-alist)
 
 ;; ;; From http://www.credmp.org/2007/07/20/on-the-fly-syntax-checking-java-in-emacs/
-;; (defun my-flymake-display-err-minibuf () 
+;; (defun aj-flymake-display-err-minibuf () 
 ;;   "Displays the error/warning for the current line in the minibuffer"
 ;;   (interactive)
 ;;   (let* ((line-no             (flymake-current-line-no))
