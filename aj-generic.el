@@ -1,5 +1,5 @@
 ;; Generics
-;; Time-stamp: "2009-10-17 19:03:21 anton"
+;; Time-stamp: "2010-02-05 16:45:15 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
@@ -8,9 +8,9 @@
 (show-paren-mode t)
 (setq fill-column 80)
 (column-number-mode t)
-(setq visible-bell t)                    ;; disable audible bell
-(setq-default indent-tabs-mode nil)      ;; TAB ger mellanslag
-(setq default-tab-width 3)               ;; set tabs to 3 spaces
+(setq visible-bell t)                ;; disable audible bell
+(setq-default indent-tabs-mode nil)  ;; TAB ger mellanslag
+(setq default-tab-width 3)           ;; set tabs to 3 spaces
 (setq speedbar-show-unknown-files t) ;;show all files in speedbar
 (set-face-background (quote cursor) "red")
 (put 'upcase-region 'disabled nil)
@@ -58,7 +58,7 @@
 (global-set-key (kbd "C-M-SPC") 'anything)
 (global-set-key "\M-n" 'just-one-space)
 (global-set-key "\M-p" 'mark-paragraph)
-(global-set-key "\M-j" 'hippie-expand) ;dabbrev-expand)
+(global-set-key "\M-j" 'hippie-expand)  ;dabbrev-expand)
 
 (setq hippie-expand-dabbrev-as-symbol t)
 (setq hippie-expand-try-functions-list
@@ -217,7 +217,7 @@
 (defun unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
-  (fill-paragraph nil)))
+    (fill-paragraph nil)))
 
 ;; Hooks ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Timestamp
@@ -237,5 +237,84 @@
 
 ;; Log-edit
 (add-hook 'log-edit-mode-hook 'flyspell-mode)
+
+;; Folding
+
+(defun aj-toggle-fold ()
+  "Toggle fold all lines larger than indentation on current line"
+  (interactive)
+  (let ((col 1))
+    (save-excursion
+      (back-to-indentation)
+      (setq col (+ 1 (current-column)))
+      (set-selective-display
+       (if selective-display nil (or col 1))))))
+(global-set-key [f1] 'aj-toggle-fold)
+
+;; Logview mode from http://stackoverflow.com/questions/133821/the-best-tail-gui
+(defvar angry-fruit-salad-log-view-mode-map
+  (make-sparse-keymap))
+
+(define-minor-mode angry-fruit-salad-log-view-mode
+  "View logs with colors.
+
+Angry colors."
+  nil " AngryLog" nil
+
+  (cond (angry-fruit-salad-log-view-mode
+         (auto-revert-tail-mode 1)
+         (highlight-changes-mode 1)
+         (define-key angry-fruit-salad-log-view-mode-map
+           (kbd "C-c C-r")
+           'highlight-changes-rotate-faces)
+         (if (current-local-map)
+             (set-keymap-parent angry-fruit-salad-log-view-mode-map
+                                (current-local-map)))
+         ;; set the keymap
+         (use-local-map angry-fruit-salad-log-view-mode-map))
+
+        (t
+         (auto-revert-tail-mode -1)
+         (highlight-changes-mode -1)
+         (use-local-map (keymap-parent angry-fruit-salad-log-view-mode-map)))))
+
+;; CUA rectangle edits
+;; (setq cua-enable-cua-keys nil) ;; only for rectangles
+;; (cua-mode t)
+
+;; by Nikolaj Schumacher, 2008-10-20. Licensed under GPL.
+(defun semnav-up (arg)
+  (interactive "p")
+  (when (nth 3 (syntax-ppss))
+    (if (> arg 0)
+        (progn
+          (skip-syntax-forward "^\"")
+          (goto-char (1+ (point)))
+          (decf arg))
+      (skip-syntax-backward "^\"")
+      (goto-char (1- (point)))
+      (incf arg)))
+  (up-list arg))
+
+(defun extend-selection (arg &optional incremental)
+  "Mark the symbol surrounding point.
+Subsequent calls mark higher levels of sexps."
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     (or (and transient-mark-mode mark-active)
+                         (eq last-command this-command))))
+  (if incremental
+      (progn
+        (semnav-up (- arg))
+        (forward-sexp)
+        (mark-sexp -1))
+    (if (> arg 1)
+        (extend-selection (1- arg) t)
+      (if (looking-at "\\=\\(\\s_\\|\\sw\\)*\\_>")
+          (goto-char (match-end 0))
+        (unless (memq (char-before) '(?\) ?\"))
+          (forward-sexp)))
+      (mark-sexp -1))))
+
+(global-set-key "\M-p" 'extend-selection)
 
 (provide 'aj-generic)

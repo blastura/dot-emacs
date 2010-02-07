@@ -1,5 +1,5 @@
 ;; Color and style
-;; Time-stamp: "2009-10-17 19:03:33 anton"
+;; Time-stamp: "2009-10-27 10:49:47 anton"
 
 (when window-system
   (require 'highlight-current-line)
@@ -26,17 +26,18 @@
 
 (defun aj-code-mode()
   (interactive)
-  ;;(set-default-font "-apple-monaco-medium-r-normal--10-0-72-72-m-0-iso10646-1" nil)
-  (set-default-font "-apple-menlo-medium-r-normal--10-0-72-72-m-0-iso10646-1")
+  (set-default-font "-apple-monaco-medium-r-normal--11-0-72-72-m-0-iso10646-1" nil)
+  ;;(set-default-font "-apple-menlo-medium-r-normal--10-0-72-72-m-0-iso10646-1")
   ;;(set-default-font "-apple-bitstream vera sans mono-medium-r-normal--11-0-72-72-m-0-iso10646-1" nil)
   
   (setq truncate-lines t)
   (highlight-current-line-set-bg-color "grey11")
-  (color-theme-tango))
+  (color-theme-rlx))
 
 (defun aj-code-mode-light()
   (interactive)
-  (set-default-font "-apple-menlo-medium-r-normal--10-0-72-72-m-0-iso10646-1")
+  (set-default-font "-apple-monaco-medium-r-normal--10-0-72-72-m-0-iso10646-1" nil)
+  ;;(set-default-font "-apple-menlo-medium-r-normal--10-0-72-72-m-0-iso10646-1")
   (setq truncate-lines t)
   (color-theme-jsc-light2)
   
@@ -49,6 +50,7 @@
    '(dired-directory ((t (:inherit font-lock-function-name-face))))
    '(ido-subdir ((t (:inherit font-lock-function-name-face))))
    '(ido-only-match ((t (:inherit font-lock-string-face :weight bold))))
+   '(ido-first-match ((t (:inherit font-lock-string-face))))
    '(ido-first-match-face ((t (:inherit font-lock-string-face))))
    '(minibuffer-prompt ((t (:foreground "black"))))
    '(default ((t (:background "#eeeedd" :foreground "#333344"))))))

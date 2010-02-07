@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2009-10-17 19:18:27 anton"
+;; Time-stamp: "2010-01-19 15:46:10 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -11,8 +11,23 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/magit"))
 
+;; Auto install
 (require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/lisp/auto-install/")
+(setq auto-install-directory (expand-file-name "~/.emacs.d/lisp/auto-install/"))
+(add-to-list 'load-path auto-install-directory)
+(require 'ring+)
+(require 'doremi)
+(require 'doremi-frm)
+
+;; JDE ;; CEDET needs to be loaded first
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/cedet-1.0pre6/common"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib-1.0"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/ecb-2.40"))
+(require 'aj-cedet)
+(require 'ecb-autoloads)
+(require 'jde)
+(require 'aj-java)
 
 ;; Modes
 (require 'flymake)
@@ -24,8 +39,9 @@
 (add-to-list 'auto-mode-alist '("\\.yml$\\|\\.yaml$" . yaml-mode))
 
 ;; Personal customizations
-;;(require 'slime)
+(require 'aj-macros)
 (require 'aj-generic)
+(require 'aj-elisp)
 (require 'aj-ediff)
 (require 'aj-color)
 (require 'aj-html)
@@ -52,16 +68,6 @@
 
 (load-file "~/.emacs.d/lisp/graphviz-dot-mode.el")
 
-;; JDE ;; CEDET needs to be loaded first
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/cedet-1.0pre6/common"))
-(require 'aj-cedet)
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/elib-1.0"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/ecb-2.40"))
-(require 'ecb-autoloads)
-(require 'jde)
-(require 'aj-java)
-
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
 
@@ -80,11 +86,14 @@
 ;; Yasnippet
 (require 'yasnippet)
 (yas/load-directory "~/.emacs.d/aj-snippets")
-(add-to-list 'yas/extra-mode-hooks
-             'rst-mode-hook)
+(setq yas/prompt-functions '(yas/dropdown-prompt
+                             yas/ido-prompt
+                             yas/completing-prompt
+                             yas/x-prompt
+                             yas/no-prompt))
 
-(add-to-list 'yas/extra-mode-hooks
-             'nxml-mode-hook)
+;; (add-to-list 'yas/extra-mode-hooks
+;;              'nxml-mode-hook)
 
 (add-hook 'yas/after-exit-snippet-hook
           '(lambda ()

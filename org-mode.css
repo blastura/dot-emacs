@@ -50,7 +50,7 @@ h4 {
     margin-top: 1em;
 }
 
-h3, h4, h5 {
+h4, h5 {
     color: #555;
 }
 
@@ -58,7 +58,7 @@ ul, ol {
     padding-left: 1em;
 }
 
-p, ul, ol {
+p, ul, ol, dl, table {
     margin-top: 0em;
     margin-bottom: 0.6em;
 }
@@ -119,13 +119,51 @@ pre {
     margin: 1em;
 }
 
-dt, dd {
-    display: block;
+dd {
+    margin-left: 1em;
 }
 
 dt {
-    float: left;
+/*     float: left; */
+    font-weight: bold;
     margin-right: 0.4em;
+}
+
+table {
+    border: none;
+    border: 1pt solid #ccb;
+    background-color: #ddc;
+
+}
+
+tbody {
+    border-top: 3px solid #ccb;
+    border-right: 1px solid #ccb;
+    border-left: 1px solid #ccb;
+}
+
+thead {
+}
+
+th {
+    font-family: Helvetica Neue, Gill Sans, sans-serif;
+    color: #555;
+    font-weight: bold;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+td {
+    border-right: 1px dashed #ccb;
+    padding: 0.5em;
+}
+
+tr {
+    border-bottom: 1px solid #ddc;
+}
+
+tbody tr:hover {
+    background-color: #e5e5d5;
 }
 
 /* Org generated css */

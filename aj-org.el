@@ -3,6 +3,7 @@
   ;;(ispell-change-dictionary "sv" nil)
   (auto-fill-mode 1)
   (local-set-key (kbd "C-<return>") 'org-export-as-html-and-open)
+  (local-set-key (kbd "C-u C-<return>") 'org-export-as-html)
   (local-set-key (kbd "C-<tab>") 'other-window)
   (local-set-key (kbd "C-S-<tab>") (lambda ()
                                      (interactive) (other-window -1))))
@@ -24,6 +25,8 @@
 ;;(setq remember-annotation-functions '(org-remember-annotation))
 ;;(setq remember-handler-functions '(org-remember-handler))
 ;;(add-hook 'remember-mode-hook 'org-remember-apply-template)
+
+(set-variable 'org-export-html-style-include-default nil)
 
 (set-variable 'org-export-html-style
               "<link rel=\"stylesheet\" type=\"text/css\" href=\"/Users/anton/.emacs.d/org-mode.css\" />")

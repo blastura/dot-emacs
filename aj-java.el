@@ -33,12 +33,14 @@
 (set-variable 'jde-global-classpath '("./bin/main" "./bin/test" "./bin"))
 
 (defun aj-jde-mode-hook ()
-  (set-variable 'senator-minor-mode-hook nil)
-  (semantic-idle-summary-mode 0)
+  ;;(set-variable 'senator-minor-mode-hook nil)
+  ;; WARNING can't be set in mode-hook
+  ;;(semantic-tag-folding-mode t)
   (setq jde-enable-abbrev-mode nil)
   (setq jde-gen-cflow-enable nil)
   (local-set-key (kbd "C-<return>") 'jde-build)
-
+  (local-set-key (kbd "M-j") 'hippie-expand)
+  (local-set-key (kbd "C-j") 'c-indent-new-comment-line)
   (local-set-key "'" 'skeleton-pair-insert-maybe)
   (local-set-key "\"" 'skeleton-pair-insert-maybe)
   (local-set-key "[" 'skeleton-pair-insert-maybe)
@@ -50,6 +52,7 @@
   ;;(c-set-offset 'inline-open 0)
   (abbrev-mode nil)
   (flymake-mode t)
+  ;;(flyspell-prog-mode)
   (toggle-truncate-lines nil))
 (add-hook 'jde-mode-hook 'aj-jde-mode-hook)
 
@@ -142,7 +145,7 @@ Runs current buffer with java"
           (delete-region (point) (re-search-backward "\\." (line-beginning-position)))
           (insert ".")
           (if method
-              (yas/expand-snippet (point) (point) method)
+              (yas/expand-snippet method (point) (point))
             (insert choise)))
       (message "No completions at this point"))))
 

@@ -10,6 +10,10 @@
 
 ;; Aquaemacs prevent opening new frames
 (when (boundp 'aquamacs-version)
-  (one-buffer-one-frame-mode 0))
+  (progn
+    (one-buffer-one-frame-mode 0)
+    ;; Prevent buffers to be opened in new frame
+    (setq special-display-regexps nil)
+    (tabbar-mode -1)))
 
 (provide 'aj-mac)

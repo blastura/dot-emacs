@@ -1,4 +1,5 @@
 ;; Close the compilation window if there was no error at all.
+;; (setq compilation-exit-message-function nil)
 (setq compilation-exit-message-function
       (lambda (status code msg)
         ;; If M-x compile exists with a 0

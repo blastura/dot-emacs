@@ -1,12 +1,11 @@
 ;;; babel.el --- interface to web translation services such as Babelfish
-;;;
-;;; Git blob $Id$
+;; $Id: babel.el,v 1.22 2008/11/09 19:49:35 juergen Exp $
 ;;;
 ;;; Author: Eric Marsden <emarsden@laas.fr>
 ;;;         Juergen Hoetzel <juergen@hoetzel.info> 
 ;;; Keywords: translation, web
 ;;; Copyright: (C) 1999-2001 Eric Marsden
-;;;                2005-2009 Juergen Hoetzel
+;;;                2005-2008 Juergen Hoetzel
 ;;
 ;;     This program is free software; you can redistribute it and/or
 ;;     modify it under the terms of the GNU General Public License as
@@ -23,10 +22,10 @@
 ;;     Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ;;     MA 02111-1307, USA.
 ;;
-;; Please send suggestions and bug reports to <juergen@hoetzel.info>. 
+;; Please send suggestions and bug reports to <emarsden@laas.fr>. 
 ;; The latest version of this package should be available at
 ;;
-;;     http://github.com/juergenhoetzel/babel/tree/master
+;;     <URL:http://www.hoetzel.info/Hacking/emacs/babel.el>
 
 ;;; Commentary:
 
@@ -111,7 +110,12 @@
 ;;    server, remove all the uninteresting text and HTML markup.
 ;;
 ;; I would be glad to incorporate backends for new translation servers
-;; which are accessible to the general public. 
+;; which are accessible to the general public. List of translation
+;; engines and multilingual dictionaries at
+;; <URL:http://funsan.biomed.mcgill.ca/~funnell/language.html>.
+;;
+;;
+;; <URL:http://www.xmethods.net/sd/BabelFishService.wsdl>
 ;;
 ;; babel.el was inspired by a posting to the ding list by Steinar Bang
 ;; <sb@metis.no>. Morten Eriksen <mortene@sim.no> provided several
@@ -120,34 +124,12 @@
 ;; Hodges <pczmph@unix.ccc.nottingham.ac.uk> suggested ignoring case
 ;; on completion. Colin Marquardt suggested
 ;; `babel-preferred-to-language'. David Masterson suggested adding a
-;; menu item. Andy Stewart provided
-;; `babel-remember-window-configuration' functionality, output window
-;; adjustments and more improvements.
+;; menu item.
 ;;
 ;; User quotes: Dieses ist die größte Sache seit geschnittenem Brot.
 ;;                 -- Stainless Steel Rat <ratinox@peorth.gweep.net> 
 
 ;;; History
-
-;;    1.1 * Fixed invalid language code mapping for serveral
-;;          languages
-
-;;    1.0 * Fixed Google backend (new regex) 
-;;        * New custom variables `babel-buffer-name',
-;;         `babel-echo-area', `babel-select-output-window'
-;;        * Disable use of echo area usage on xemacs if lines > 1
-;;          (resize of minibuffer does not work reliable)
-;;        * `babel-url-retrieve' fix for xemacs from Uwe Brauer
-
-;;    0.9  * Use `babel-buffer-name' for output buffer
-            	
-;;    0.8  * Remember window config if `babel-remember-window-configuration' 
-;;           is non-nil.
-;;         * made *babel* buffer read-only
-;;         * use echo area (like `shell-command')
-;;         * New functions `babel-as-string-default',`babel-region-default', 
-;;           `babel-buffer-default', `babel-smart' (provided by Andy)
-
 
 ;;    0.7  * error handling if no backend is available for translating
 ;;           the supplied languages
@@ -173,26 +155,7 @@
 ;;;        * revised history handling 
 ;;;        * added helper function: babel-wash-regex
 
-
-;; TODO:
-;;
-;; * Use google xml output
-;; 
-;; * Adjust output window height. Current versions use
-;;  `with-current-buffer' instead `with-output-to-temp-buffer'. So
-;;  `temp-buffer-show-hook' will fail to adjust output window height
-;;  -> Use (fit-window-to-buffer nil babel-max-window-height) to
-;;  adjust output window height in new version.
-;;
-;; * use non-blocking `url-retrieve' 
-;; 
-;; * improve function `babel-simple-html-parse'.
-;; 
-;; * In `babel-quite' function, should be add (boundp
-;;   'babel-previous-window-configuration) to make value of
-;;   `babel-previous-window-configuration' is valid
-;;
-
+;;; Code:
 
 (require 'cl)
 (require 'mm-url)
@@ -213,7 +176,7 @@
   :group 'applications)
 
 
-(defconst babel-version "1.1"
+(defconst babel-version 0.7
   "The version number of babel.el")
 
 (defconst babel-languages
@@ -233,21 +196,21 @@
     ("Indonesian" . "id")
     ("Italian" . "it")
     ("Hebrew" . "iw")
-    ("Japanese" . "ja")
+    ("ja" . "Japanese")
     ("Korean" . "ko")
-    ("Lithuanian" . "lt")
+    ("lt" . "Lithuanian")
     ("Latvian" . "lv")
-    ("Dutch" . "nl")
+    ("nl" . "Dutch")
     ("Norwegian" . "no")
-    ("Polish" . "pl")
+    ("pl" . "Polish")
     ("Portuguese" . "pt")
-    ("Romanian" . "ro")
+    ("ro" . "Romanian")
     ("Russian" . "ru")
-    ("Slovak" . "sk")
+    ("sk" . "Slovak")
     ("Slovenian" . "sl")
-    ("Serbian" . "sr")
+    ("sr" . "Serbian")
     ("Swedish" . "sv")
-    ("Filipino" . "tl")
+    ("tl" . "Filipino")
     ("Ukrainian" . "uk")
     ("Vietnamese" . "vi")
     ("Chinese (Simplified)" . "zh-CN")
@@ -271,47 +234,6 @@ This must be the long name of one of the languages in the alist"
 	 (set-default symbol value)
 	 (setq babel-from-history (list value)))
   :group 'babel)
-
-
-(defcustom babel-remember-window-configuration t
-  "Whether remeber window configuration before transform.  If this
-variable is t, will use `babel-quit' command restore window
-configuration."
-  :type 'boolean
-  :group 'babel)
-
-(defcustom babel-max-window-height 30
-  "The max height that babel output window."
-  :type 'integer
-  :group 'babel)
-
-
-  
-(defcustom babel-buffer-name "*babel*"
-  "The buffer name of `babel' transform output."
-  :type 'string
-  :group 'babel)
- 
-(defcustom babel-echo-area t
-  "If this option is `non-nil' and the output is short enough to
- display in the echo area (which is determined by the variables
- `resize-mini-windows' and `max-mini-window-height'), it is shown in
- echo area.
- 
- Default is `t'."
-  :type 'boolean
-  :group 'babel)
- 
-(defcustom babel-select-output-window t
-  "Select output window after transform complete.
- This is useful when you have a complex window layout.
- Save you time to switch babel output window."
-   :type 'boolean
-   :group 'babel)
-
-
-(defvar babel-previous-window-configuration nil
-  "The window configuration before transform.")
 
 (defvar babel-to-history (list babel-preferred-to-language))
 (defvar babel-from-history (list babel-preferred-to-language))
@@ -355,7 +277,7 @@ function, not available on other emacsen"
 	      (tmp (url-retrieve-synchronously url)))
 	  (with-current-buffer tmp
 	    ;;shrug: we asume utf8 
-	    (decode-coding-region (point-min) (point-max) 'utf-8)
+	    ;; (mm-decode-coding-region (point-min) (point-max) 'utf-8)
 	    (copy-to-buffer current (point-min) (point-max)))))
     ;; GNUs Emacs
     (require 'url-handlers)
@@ -374,26 +296,18 @@ translated text should be inside parenthesized expression in regex"
 	t)))
 
 ;;;###autoload
-(defun babel (msg &optional no-display accept-default-setup)
+(defun babel (msg &optional no-display)
   "Use a web translation service to translate the message MSG.
 Display the result in a buffer *babel* unless the optional argument
-NO-DISPLAY is nil.
-
-If the output is short enough to display in the echo area (which is
-determined by the variables `resize-mini-windows' and
-`max-mini-window-height'), it is shown there, but it is nonetheless
-available in buffer `*babel*' even though that buffer is not
-automatically displayed."
+NO-DISPLAY is nil."
   (interactive "sTranslate phrase: ")
   (let* ((completion-ignore-case t)
          (from-suggest (or (first babel-from-history) (caar babel-languages)))
          (from-long
-          (if accept-default-setup
-              babel-preferred-from-language
-            (completing-read "Translate from: "
-                             babel-languages nil t
-                             (cons from-suggest 0)
-                             'babel-from-history)))
+          (completing-read "Translate from: "
+                           babel-languages nil t
+                           (cons from-suggest 0)
+                           'babel-from-history))
          (to-avail (remove* from-long babel-languages
                             :test #'(lambda (a b) (string= a (car b)))))
          (to-suggest (or (first 
@@ -401,11 +315,9 @@ automatically displayed."
 				   :test #'string=))
 			 (caar to-avail)))
          (to-long
-          (if accept-default-setup
-              babel-preferred-to-language
-            (completing-read "Translate to: " to-avail nil t
-                             (cons to-suggest 0)
-                             'babel-to-history)))
+          (completing-read "Translate to: " to-avail nil t
+                           (cons to-suggest 0)
+                           'babel-to-history))
          (from (cdr (assoc from-long babel-languages)))
          (to   (cdr (assoc to-long babel-languages)))
          (backends (babel-get-backends from to)))
@@ -413,12 +325,11 @@ automatically displayed."
 	(error "No Backend available for translating %s to %s" 
 	       from-long to-long)
       (let* ((backend-str
-              (if accept-default-setup (caar backends)
-                (completing-read "Using translation service: "
-                                 backends nil t
-                                 (cons (or (member (first babel-backend-history)
-                                                   backends) (caar backends)) 0)
-                                 'babel-backend-history)))
+	     (completing-read "Using translation service: "
+			      backends nil t 
+			      (cons (or (member (first babel-backend-history) 
+						backends) (caar backends)) 0) 
+			      'babel-backend-history))
 	     (backend (symbol-name (cdr (assoc backend-str babel-backends))))
 	     (fetcher (intern (concat "babel-" backend "-fetch")))
 	     (washer  (intern (concat "babel-" backend "-wash")))
@@ -430,112 +341,14 @@ automatically displayed."
 		       translated-chunks))
 	(if no-display
 	    (apply #'concat (nreverse translated-chunks))
-	  (let ((pop-up-frames nil)
-                (temp-buffer-show-hook
-                 '(lambda ()
-                    (fit-window-to-buffer nil babel-max-window-height)
-                    (shrink-window-if-larger-than-buffer))))
-	    (if (and babel-remember-window-configuration
-		     (null babel-previous-window-configuration))
-                (setq babel-previous-window-configuration (current-window-configuration)))
-            (with-current-buffer
-		(get-buffer-create babel-buffer-name)
-	      ;; ensure buffer is writeable
-	      (setq buffer-read-only nil)
-	      (erase-buffer)
-              (loop for tc in (nreverse translated-chunks)
-                    do (insert tc))
-              (save-excursion
-                (with-current-buffer babel-buffer-name
-		  (let ((lines
-			 (if (= (buffer-size) 0)
-			     0
-			   ;; xemacs compatibility
-			   (if (not (featurep 'xemacs))
-			       (count-screen-lines nil nil nil (minibuffer-window))
-			     (count-lines (point-min) (point-max))))))
-		    (babel-mode)
-		    (cond ((= lines 0))
-			  ((and babel-echo-area (or (<= lines 1)
-				    (and (not (featurep 'xemacs)) 
-					 (<= lines
-					     (if resize-mini-windows
-						 (cond ((floatp max-mini-window-height)
-							(* (frame-height)
-							   max-mini-window-height))
-						       ((integerp max-mini-window-height)
-							max-mini-window-height)
-						       (t
-							1))
-					       1))))
-				;; Don't use the echo area if the output buffer is
-				;; already dispayed in the selected frame.
-				(not (get-buffer-window (current-buffer))))
-			   ;; Echo area
-			   (goto-char (point-max))
-			   (when (bolp)
-			     (backward-char 1))
-			   (message "%s" (buffer-substring (point-min) (point))))
-			  (t
-			   ;; Buffer
-			   (goto-char (point-min))
-			   (display-buffer (current-buffer))))))))))))))
-
-(defun babel-as-string-default (msg)
-     "Use a web translation service to translate MSG, returning a string."
-     (interactive "sTranslate phrase: ")
-     (babel msg t t))
-
-(defun babel-region-default (start end &optional arg)
-  "Use a web translation service to translate the current region.
- With prefix argument, insert the translation output at point."
-  (interactive "r\nP")
-  (if arg
-      (insert (babel (buffer-substring-no-properties start end) t t))
-    (babel (buffer-substring-no-properties start end) nil t)))
-
-(defun babel-buffer-default ()
-  "Use a web translation service to translate the current buffer.
- Default is to present the translated text in a *babel* buffer.
- With a prefix argument, replace the current buffer contents by the
- translated text."
-  (interactive)
-  (let (pos)
-    (cond (prefix-arg
-	   (setq pos (point-max))
-	   (goto-char pos)
-	   (insert
-	    (babel-as-string-default
-	     (buffer-substring-no-properties (point-min) (point-max))))
-	   (delete-region (point-min) pos))
-	  (t
-	   (babel-region-default (point-min) (point-max))))))
-
- (defun babel-smart (&optional prefix)
-   "Smart babel function.  If you use prefix keystroke, prompt with
- input. Same effect with `babel'.  If mark active with current buffer,
- transform region. Same effect with `babel-region'.  Otherwise
- transform all content of current buffer. Same effect with
- `babel-buffer'."
-   (interactive "P")
-   (if (null prefix)
-       (if mark-active
-           (babel-region-default (region-beginning) (region-end))
-         (babel-buffer-default))
-     (babel (read-string "Translate phrase: ") nil t)))
-
-(defun babel-quit ()
-  "Quit babel window.  If `babel-remember-window-configuration' is t,
-restore window configuration before transform.  Otherwise just do
-`bury-buffer'."
-  (interactive)
-  (if (and babel-remember-window-configuration
-           babel-previous-window-configuration)
-      (progn
-        (kill-buffer (get-buffer babel-buffer-name))
-        (set-window-configuration babel-previous-window-configuration)
-        (setq babel-previous-window-configuration nil))
-    (bury-buffer)))
+	  (with-output-to-temp-buffer "*babel*"
+	    (message "Translating...")
+	    (loop for tc in (nreverse translated-chunks)
+		       do (princ tc))
+	    (save-excursion
+	      (set-buffer "*babel*")
+		   (babel-mode))
+	    (message "Translating...done")))))))
 
 ;;;###autoload
 (defun babel-region (start end &optional arg)
@@ -626,13 +439,11 @@ language FROM into language TO."
 
 (defun babel-mode ()
   (interactive)
-  (kill-all-local-variables)
   (use-local-map babel-mode-map)
   (setq major-mode 'babel-mode
-        mode-name "Babel"
-	buffer-read-only t)
-  (buffer-disable-undo)
+        mode-name "Babel")
   (run-hooks 'babel-mode-hook))
+
 
 (cond ((fboundp 'string-make-unibyte)
        (fset 'babel-make-unibyte #'string-make-unibyte))
@@ -856,7 +667,7 @@ If optional argument HERE is non-nil, insert version number at point."
 
 (defun babel-google-wash ()
   "Extract the useful information from the HTML returned by google."
-  (if (not (babel-wash-regex "<div id=result_box dir=\"[^\"]*\">\\(.*?\\)</div>"))
+  (if (not (babel-wash-regex "<div id=result_box dir=\"[^\"]*\">\\(.*\\)</div></td></tr><tr><td[ \t]*class=submitcell>"))
       (error "Google HTML has changed ; please look for a new version of babel.el")))
   
 ;; TODO: ecs.freetranslation.com
@@ -865,6 +676,7 @@ If optional argument HERE is non-nil, insert version number at point."
 ;;   (let ((buf (get-buffer-create "*babel-debug*")))
 ;;     (set-buffer buf)
 ;;     (babel-free-fetch "state mechanisms are too busy" "eng" "ger")))
+
 
 (easy-menu-add-item nil '("tools") ["Babel Translation" babel t]) 
 

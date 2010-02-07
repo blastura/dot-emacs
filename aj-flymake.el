@@ -1,7 +1,7 @@
 ;;-1 = NONE, 0 = ERROR, 1 = WARNING, 2 = INFO, 3 = DEBUG
 (set-variable 'flymake-log-level 0)
 (set-variable 'flymake-no-changes-timeout 0.5)
-;;(set-variable 'flymake-start-syntax-check-on-newline nil)
+(set-variable 'flymake-start-syntax-check-on-newline nil)
 
 (defun aj-flymake-restart-after-crach()
   (interactive)
