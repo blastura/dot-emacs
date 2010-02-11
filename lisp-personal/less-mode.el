@@ -2,9 +2,6 @@
 
 ;; Copyright (C) 2002 - 2015 Anton Johansson <anton.johansson@gmail.com>
 
-;; Command lessc is required @see : http://lesscss.org/
-;; To install lessc do : sudo gem install less
-
 ;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
 ;; published by the Free Software Foundation; either version 2 of
@@ -17,16 +14,20 @@
 
 ;; Homepage: http://antonj.se
 ;; Created: 28 Oct 2002
-;; Last modified: 15 Feb 2005
 ;; Version: 0.3.3
 ;; Keywords: mode css less
+
+;; Info ;;;;;;;;;;;;;;;;
+;; Command lessc is required @see : http://lesscss.org/
+;; To install lessc do : sudo gem install less
 
 ;;;###autoload
 (require 'derived)
 
+;;;###autoload (add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
 ;;;###autoload
 (define-derived-mode less-mode css-mode "Less"
-  "Major mode for editing Less files."
+  "Major mode for editing Less files, http://lesscss.org/"
   (add-hook 'local-write-file-hooks 'less-parse)
 )
 
@@ -34,5 +35,4 @@
   (save-excursion
     (shell-command (concat "lessc " (buffer-name) "&") nil "*Less errors*"))
   nil) ;; Return nil to not interrupt saving process
-
-(add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
+(provide 'less-mode)

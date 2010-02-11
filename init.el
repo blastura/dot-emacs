@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-01-19 15:46:10 anton"
+;; Time-stamp: "2010-02-07 23:31:55 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -28,6 +28,10 @@
 (require 'ecb-autoloads)
 (require 'jde)
 (require 'aj-java)
+
+;; Personal
+(autoload 'less-mode "less-mode")
+(add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
 
 ;; Modes
 (require 'flymake)
