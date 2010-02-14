@@ -1,5 +1,5 @@
 ;; Generics
-;; Time-stamp: "2010-02-05 16:45:15 anton"
+;; Time-stamp: "2010-02-14 19:05:23 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
@@ -56,6 +56,10 @@
 (global-set-key "\M-1" 'beginning-of-buffer)
 (global-set-key "\M-2" 'end-of-buffer)
 (global-set-key (kbd "C-M-SPC") 'anything)
+(global-set-key (kbd "C-M--") 'shrink-window)
+(global-set-key (kbd "C-M-_") 'shrink-window-horizontally)
+(global-set-key (kbd "C-M-+") 'enlarge-window)
+(global-set-key (kbd "C-M-?") 'enlarge-window-horizontally)
 (global-set-key "\M-n" 'just-one-space)
 (global-set-key "\M-p" 'mark-paragraph)
 (global-set-key "\M-j" 'hippie-expand)  ;dabbrev-expand)
