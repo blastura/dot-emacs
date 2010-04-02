@@ -2,6 +2,6 @@
 #name: @Test public void test...
 # --
 @Test
-public void test$0() {
+public void $0() {
 
 }
