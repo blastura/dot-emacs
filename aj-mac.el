@@ -1,3 +1,5 @@
+(set-variable 'ns-pop-up-frames nil)
+
 (setq mac-command-modifier 'meta)
 ;;(setq mac-option-modifier 'alt)
 

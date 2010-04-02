@@ -5,4 +5,6 @@
   (toggle-truncate-lines nil))
 (add-hook 'nxml-mode-hook 'aj-nxml-mode-hook)
 
+;;(push "~/.emacs.d/resources/schemas/schemas.xml" rng-schema-locating-files-default)
+
 (provide 'aj-nxml)

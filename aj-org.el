@@ -13,6 +13,7 @@
 (setq org-startup-folded t)
 (setq org-level-color-stars-only nil)
 (setq org-fontify-emphasized-text t)
+(setq org-log-done 'time)
 
 ;; Hide leading stars face
 (setq org-hide-leading-stars t)

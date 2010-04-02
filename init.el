@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-02-07 23:31:55 anton"
+;; Time-stamp: "2010-04-01 00:02:12 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -18,6 +18,21 @@
 (require 'ring+)
 (require 'doremi)
 (require 'doremi-frm)
+;;(auto-install-from-url "http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el")
+(autoload 'espresso-mode "espresso" nil t)
+
+;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (cons '("\\.text$\\|\\.markdown$" . markdown-mode) auto-mode-alist))
+
+;;(auto-install-from-url "http://www.xsteve.at/prg/emacs/psvn.el")
+(require 'psvn)
+(require 'php-mode-improved)
+
+;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
+(autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
+(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
 ;; JDE ;; CEDET needs to be loaded first
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
@@ -43,6 +58,7 @@
 (add-to-list 'auto-mode-alist '("\\.yml$\\|\\.yaml$" . yaml-mode))
 
 ;; Personal customizations
+(require 'aj-ibuffer)
 (require 'aj-macros)
 (require 'aj-generic)
 (require 'aj-elisp)
@@ -80,7 +96,7 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; Other customizations
-(load "/Applications/Emacs.app/Contents/Resources/site-lisp/nxml-mode/rng-auto.el")
+;;(load "/Applications/Emacs.app/Contents/Resources/site-lisp/nxml-mode/rng-auto.el")
 (require 'aj-nxml)
 ;;(load "~/.emacs.d/lisp/nxhtml/autostart.el")
 
@@ -96,6 +112,7 @@
                              yas/x-prompt
                              yas/no-prompt))
 
+
 ;; (add-to-list 'yas/extra-mode-hooks
 ;;              'nxml-mode-hook)
 
@@ -104,6 +121,7 @@
              (indent-region yas/snippet-beg
                             yas/snippet-end)))
 (set-variable 'yas/trigger-key "")
+(set-variable 'yas/wrap-around-region t)
 (yas/initialize)
 
 ;; Find-file-not-found-hooks

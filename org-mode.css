@@ -8,7 +8,7 @@ html {
 }
 
 body {
-    font-family: Baskerville, Georgia, serif;
+    font-family: Helvetica, Arial, sans-serif;
     background-color: #eed;
     width: 70%;
     max-width: 45em;
@@ -24,43 +24,42 @@ a {
 
 h1, h2, h3, h4, h5 {
     font-family: Helvetica Neue, Gill Sans, sans-serif;
+    margin-bottom: 0.3em;
 }
 
 h1 {
-    font-size: 4em;
-    margin-bottom: 1em;
+    font-size: 3em;
     margin-top: 0.5em;
 }
 
 h2 {
-    font-size: 2em;
+    font-size: 1.5em;
+    border-bottom: 1px solid #777;
     margin-top: 1.2em;
-    margin-bottom: 0.5em;
 }
 
 h3 {
     font-size: 1.2em;
-    margin-bottom: 0.2em;
     margin-top: 1em;
 }
 
 h4 {
     font-size: 1em;
-    margin-bottom: 0.3em;
-    margin-top: 1em;
+    margin-top: 0.5em;
 }
 
 h4, h5 {
-    color: #555;
+    color: #333;
 }
 
 ul, ol {
-    padding-left: 1em;
+    padding-left: 1.5em;
 }
 
 p, ul, ol, dl, table {
     margin-top: 0em;
-    margin-bottom: 0.6em;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
 }
 
 td {

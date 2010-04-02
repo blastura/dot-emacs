@@ -1,16 +1,18 @@
 ;; Generics
-;; Time-stamp: "2010-02-14 19:05:23 anton"
+;; Time-stamp: "2010-03-31 09:50:08 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
-(setq truncate-lines t)
+(set-default 'truncate-lines t)
+(setq delete-by-moving-to-trash t)
 (global-font-lock-mode t)
 (show-paren-mode t)
 (setq fill-column 80)
 (column-number-mode t)
 (setq visible-bell t)                ;; disable audible bell
 (setq-default indent-tabs-mode nil)  ;; TAB ger mellanslag
-(setq default-tab-width 3)           ;; set tabs to 3 spaces
+(setq default-tab-width 3)           ;; Emacs < 23 set tabs to 3 spaces
+(setq tab-width 3)                   ;; Emacs 23: set tabs to 3 spaces
 (setq speedbar-show-unknown-files t) ;;show all files in speedbar
 (set-face-background (quote cursor) "red")
 (put 'upcase-region 'disabled nil)
@@ -29,7 +31,7 @@
 ;;(set-input-method nil)
 
 (setq exec-path (cons "/opt/local/bin" exec-path))
-(setenv "PATH" (concat "/opt/local/bin:/opt/local/sbin:"
+(setenv "PATH" (concat (expand-file-name "~/bin") ":/opt/local/bin:/opt/local/sbin:"
                        (getenv "PATH")))
 (set-variable 'vc-path '("/opt/local/bin"))
 
@@ -83,8 +85,8 @@
 (global-set-key "\C-w" 'backward-kill-word) ;; erases standard kill-region
 (global-set-key "\C-x\C-k" 'kill-region) ;; replace standard kill-region
 (global-set-key "\M-y" 'anything-show-kill-ring) ;; replace standard yank-pop
-(global-set-key (kbd "C-x C-b") #'ibuffer) ;; removes standard list-buffers
-(global-set-key "\C-c\C-o" 'ffap)
+(global-set-key (kbd "C-x C-b") (lambda() (interactive) (ibuffer t))) ;; removes standard list-buffers
+(global-set-key "\C-co" 'ffap)
 (global-set-key "\C-x\C-m" 'execute-extended-command) ;; M-x
 (global-set-key "\C-c\C-m" 'execute-extended-command) ;; M-x
 (global-set-key "\C-xO" (lambda () (interactive) (other-window -1)))

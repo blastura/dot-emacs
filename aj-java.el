@@ -1,6 +1,25 @@
 ;; Java
 ;; Time-stamp: "2008-11-08 14:24:39 anton
 
+
+
+;; Java maven project settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (when (string-match "Emacs 23" (emacs-version))
+;;   (jde-project-file-version "1.0")
+
+;;   (jde-set-variables
+;;    '(jde-build-function (quote (jde-mvn-build)))
+;;    '(jde-compile-option-command-line-args
+;;      (quote ("-Xlint:all" "-Xlint:-serial"))))
+
+;;   (with-pom nil
+;;     (jde-mvn-set-jde-variables :include-dependency-sources t))
+
+;;   ;; Map C-c C-v C-t to run current test
+;;   (define-key jde-mode-map [remap jde-jdb-menu-debug-applet]
+;;     'jde-mvn-build-run-test))
+;; End java maven project settings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;; Flymake JDE
 
 (require 'aj-flymake-java)
@@ -112,6 +131,32 @@ Runs current buffer with java"
    (concat "java "
            (first (split-string (buffer-name)
                                 ".java")))))
+
+;; (defun aj-maven-quickstart-prj (groupId artifactId)
+;;   (interactive "sgroupId: \ns artifactId: ")
+;;    ;; mvn archetype:generate -B
+;;    ;; -DarchetypeGroupId=org.apache.maven.archetypes
+;;    ;; -DarchetypeArtifactId=maven-archetype-quickstart
+;;    ;; -DarchetypeVersion=1.0
+;;    ;; -DgroupId=com.company
+;;    ;; -DartifactId=project
+;;    ;; -Dversion=1.0
+;;    ;; -Dpackage=1.5
+
+;;   (shell-command (concat "mvn -B archetype:generate"
+;;                          " -DarchetypeGroupId=antonj.se"
+;;                          " -DarchetypeArtifactId=aj-quickstart"
+;;                          " -DarchetypeVersion=1.0"
+;;                          ;;" -DarchetypeCatalog=local"
+;;                          " -Dversion=1.0"
+;;                          " -Dpackage=1.5"
+;;                          " -DgroupId=" groupId
+;;                          " -DartifactId=" artifactId))
+;;   ;;(shell-command "")
+;;   )
+
+
+
 
 (defun insert-java-template()
   "inserts standard java-class structure"

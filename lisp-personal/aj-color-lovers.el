@@ -142,7 +142,7 @@
 ;; (list-colors-display (cons "green" (mapcar 'aj-color-to-hex (aj-color-triad "green"))))
 ;; (list-colors-display (cons "red" (mapcar 'aj-color-to-hex (aj-color-triad "red"))))
 ;; (list-colors-display (cons "#332233" (mapcar 'aj-color-to-hex (aj-color-triad "#332233"))))
-;; (list-colors-display (cons "#8566FF" (mapcar 'aj-color-to-hex (aj-color-triad "#8566FF"))))
+;; (list-colors-display (cons "#8566ff" (mapcar 'aj-color-to-hex (aj-color-triad "#8566ff"))))
 
 ;; 10 20 30
 ;; --------
@@ -175,7 +175,7 @@
       (set-face-foreground level (nth i lst))
       (setq i (% (+ i 1) (length lst)))
       )))
-(aj-set-org-level-faces cls)
+;;(aj-set-org-level-faces cls)
 
 ;; (require 'hexrgb)
 (defun aj-set-org-level-faces-fade-from-type-face ()
