@@ -1,5 +1,5 @@
 ;; Color and style
-;; Time-stamp: "2010-03-22 19:02:22 anton"
+;; Time-stamp: "2010-04-05 18:27:48 anton"
 
 (when window-system
   (require 'highlight-current-line)
@@ -8,6 +8,7 @@
   
   (require 'color-theme)
   (color-theme-initialize)
+  (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-themes"))
   (load "~/.emacs.d/lisp/color-themes/color-theme-cl-frame.el")
   (load "~/.emacs.d/lisp/color-themes/color-theme-tango.el")
   (load "~/.emacs.d/lisp/color-themes/color-theme-rlx.el")
