@@ -1,5 +1,5 @@
 ;; Color and style
-;; Time-stamp: "2010-04-05 18:27:48 anton"
+;; Time-stamp: "2010-04-07 00:27:50 anton"
 
 (when window-system
   (require 'highlight-current-line)
@@ -17,9 +17,13 @@
   (autoload 'zenburn "zenburn" "Color-theme-zenburn." t)
   ;;(color-theme-goldenrod) ;;nice and dark
   ;;(color-theme-charcoal-black) ;; grey and blue low sat
-    
-  (progn (color-theme-jsc-light2) ;;nice and bright
-         (highlight-current-line-set-bg-color "light yellow")))
+  (set-frame-font "-apple-Monaco-medium-normal-normal-*-11-*-*-*-m-0-iso10646-1" nil)
+  
+  ;; (progn (color-theme-jsc-light2) ;;nice and bright
+  ;;        (highlight-current-line-set-bg-color "light yellow"))
+  (zenburn)
+  (custom-set-faces
+   '(cursor ((t (:background "red"))))))
 ;;   (progn (color-theme-rlx) ;;dark and fine
 ;;          (highlight-current-line-set-bg-color "black")))
 

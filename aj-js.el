@@ -1,4 +1,14 @@
-(setq js2-bounce-indent-p nil)
+;;(setq js2-bounce-indent-p nil)
+
+(defun aj-js-compr-buffer()
+  (interactive)
+  ;; Change yui compr to fit your path
+  (let ((yui-compr-jar (expand-file-name "~/lib/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar")))
+  (shell-command
+   (concat "java -jar " yui-compr-jar 
+           " -o " (first (split-string (buffer-file-name)
+                                       "[.]js")) ".min.js"
+                                       " "(buffer-file-name)))))
 
 ;; From: http://mihai.bazon.net/projects/editing-javascript-with-emacs-js2-mode
 (defun my-js2-indent-function ()
@@ -57,3 +67,4 @@
   (message "My JS2 hook"))
 
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
+(provide 'aj-js)

@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-04-01 00:02:12 anton"
+;; Time-stamp: "2010-04-07 09:36:48 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -33,6 +33,12 @@
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+
+;; ;; w3m
+;; (add-to-list 'load-path (expand-file-name "/opt/local/share/emacs/site-lisp/w3m"))
+;; (require 'w3m-load)
+;; (require 'w3m-e21)
+;; (provide 'w3m-e23)
 
 ;; JDE ;; CEDET needs to be loaded first
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
@@ -78,6 +84,7 @@
 (require 'aj-compilation)
 (require 'aj-ido)
 (require 'aj-term)
+(require 'aj-js)
 ;;(requireaj 'my-python)
 ;; (requiraje 'anything-match-plugin)
 ;; (set-variable 'anything-mp-highlight-delay nil)
@@ -127,6 +134,10 @@
 ;; Find-file-not-found-hooks
 (setq default-major-mode 'org-mode)
 
+;; Default to read-only open files
+(require 'aj-read-only-keymap-hooks)
+
+;; Insert snippets to bufferts with certain extensions
 (add-hook 'find-file-not-found-hooks
           '(lambda ()
              (if (equal (file-name-extension (buffer-file-name)) "java")
