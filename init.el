@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-04-07 09:36:48 anton"
+;; Time-stamp: "2010-09-18 17:07:46 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -10,6 +10,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/magit"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/rainbow"))
 
 ;; Auto install
 (require 'auto-install)
@@ -21,6 +22,10 @@
 ;;(auto-install-from-url "http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el")
 (autoload 'espresso-mode "espresso" nil t)
 
+;;(auto-install-from-url "http://autopair.googlecode.com/svn/tags/REL_0_3/autopair.el")
+(require 'autopair)
+(autopair-global-mode t)
+
 ;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.text$\\|\\.markdown$" . markdown-mode) auto-mode-alist))
@@ -28,6 +33,10 @@
 ;;(auto-install-from-url "http://www.xsteve.at/prg/emacs/psvn.el")
 (require 'psvn)
 (require 'php-mode-improved)
+
+;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/haml-mode.el")
+;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/sass-mode.el")
+(require 'sass-mode)
 
 ;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
@@ -54,11 +63,17 @@
 (autoload 'less-mode "less-mode")
 (add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
 
+;;(autoload 'scss-mode "scss-mode")
+(require 'scss-mode)
+;;(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
 ;; Modes
 (require 'flymake)
 (require 'magit)
+(require 'rainbow-mode)
 (require 'anything-config)
 (require 'git)
+;; (auto-install-from-url "http://github.com/juergenhoetzel/babel/raw/STABLE/babel.el")
 (require 'babel) ;; Translate with eg Google
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$\\|\\.yaml$" . yaml-mode))
@@ -80,6 +95,7 @@
 (require 'aj-flymake)
 (require 'aj-flymake-c)
 (require 'aj-flymake-css)
+(require 'flymake-scss)
 (require 'aj-anything)
 (require 'aj-compilation)
 (require 'aj-ido)
@@ -128,11 +144,11 @@
              (indent-region yas/snippet-beg
                             yas/snippet-end)))
 (set-variable 'yas/trigger-key "")
-(set-variable 'yas/wrap-around-region t)
+(set-variable 'yas/wrap-around-region nil)
 (yas/initialize)
 
 ;; Find-file-not-found-hooks
-(setq default-major-mode 'org-mode)
+(setq major-mode 'org-mode)
 
 ;; Default to read-only open files
 (require 'aj-read-only-keymap-hooks)
