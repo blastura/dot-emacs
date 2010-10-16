@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# contributor : anton.johansson@gmail.com
+# name: box-shadow: ...
+# --
+-webkit-box-shadow: ${1:horisontal} ${2:vertical} ${3:radius} ${4:color};
+   -moz-box-shadow: $1 $2 $3 $4;
+        box-shadow: $1 $2 $3 $4;
