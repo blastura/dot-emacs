@@ -72,4 +72,23 @@
 ;; Bind key for multi-term
 (push '("C-c C-j" . aj-term-toggle-line-char) term-bind-key-alist)
 
+;; From http://atomized.org/2008/07/emacs-open-a-shell-in-the-current-directory/
+;; Added cd
+(defun shell-here ()
+  "Open a shell in `default-directory'."
+  (interactive)
+  (let ((dir (expand-file-name default-directory))
+        (buf (or (get-buffer "*shell*") (shell))))
+    (goto-char (point-max))
+    (if (not (string= (buffer-name) "*shell*"))
+        (switch-to-buffer-other-window buf))
+    (message list-buffers-directory)
+    (if (not (string= (expand-file-name list-buffers-directory) dir))
+        (progn (comint-send-string (get-buffer-process buf)
+                                   (concat "cd \"" dir "\"\r"))
+               (cd dir) ;; Added
+               (setq list-buffers-directory dir)))))
+
+(global-set-key (kbd "C-c !") 'shell-here)
+
 (provide 'aj-term)

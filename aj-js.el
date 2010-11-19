@@ -1,4 +1,9 @@
-;;(setq js2-bounce-indent-p nil)
+;; Add "support" for js files in speedbar, interpreted as c
+(speedbar-add-supported-extension ".js")
+(add-to-list 'speedbar-fetch-etags-parse-list
+             '("\\.js" . speedbar-parse-c-or-c++tag))
+
+
 
 (defun aj-js-compr-buffer()
   (interactive)
@@ -44,6 +49,15 @@
 
 (defun my-js2-mode-hook ()
   (require 'espresso)
+
+  ;; fix bug with my-indent-sexp
+  (setq c-current-comment-prefix
+        (if (listp c-comment-prefix-regexp)
+            (cdr-safe (or (assoc major-mode c-comment-prefix-regexp)
+                          (assoc 'other c-comment-prefix-regexp)))
+          c-comment-prefix-regexp))
+  ;; end bug with my-indent-sexp
+  
   (setq espresso-indent-level 4
         indent-tabs-mode nil
         c-basic-offset 4)
@@ -58,6 +72,7 @@
        (save-excursion
          (insert " ]----- */"))
        ))
+  (define-key js2-mode-map [(meta q)] 'c-fill-paragraph)
   (define-key js2-mode-map [(return)] 'newline-and-indent)
   (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
   (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)

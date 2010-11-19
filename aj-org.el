@@ -13,7 +13,11 @@
 (setq org-startup-folded t)
 (setq org-level-color-stars-only nil)
 (setq org-fontify-emphasized-text t)
-(setq org-log-done 'time)
+(setq org-log-done nil)
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+        (sequence "QUESTION(q)" "|" "ANSWER(s)")))
 
 ;; Hide leading stars face
 (setq org-hide-leading-stars t)
@@ -22,6 +26,14 @@
              (((background dark)) (:foreground "dim gray")))))
  
 (setq org-directory "~/Documents/org")
+
+;; MbileOrg
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull (expand-file-name (concat org-directory "/notes.org")))
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+
+
 (setq org-default-notes-file "~/Documents/org/notes.org")
 ;;(setq remember-annotation-functions '(org-remember-annotation))
 ;;(setq remember-handler-functions '(org-remember-handler))

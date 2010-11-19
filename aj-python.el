@@ -5,6 +5,7 @@
 
 (add-hook 'python-mode-hook
           (lambda ()
+            (global-set-key "\C-o" 'open-line)
             (set (make-variable-buffer-local 'beginning-of-defun-function)
                  'py-beginning-of-def-or-class)
             (setq outline-regexp "def\\|class ")))
@@ -42,7 +43,7 @@
 
 ;; Ropemacs
 ;;(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
+;; (pymacs-load "ropemacs" "rope-")
 
 (message "aj-python loaded")
 (provide 'aj-python)

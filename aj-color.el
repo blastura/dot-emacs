@@ -1,5 +1,5 @@
 ;; Color and style
-;; Time-stamp: "2010-04-07 00:27:50 anton"
+;; Time-stamp: "2010-09-18 23:32:38 anton"
 
 (when window-system
   (require 'highlight-current-line)
@@ -17,7 +17,8 @@
   (autoload 'zenburn "zenburn" "Color-theme-zenburn." t)
   ;;(color-theme-goldenrod) ;;nice and dark
   ;;(color-theme-charcoal-black) ;; grey and blue low sat
-  (set-frame-font "-apple-Monaco-medium-normal-normal-*-11-*-*-*-m-0-iso10646-1" nil)
+  (set-frame-font "-apple-monaco-medium-r-normal--10-0-72-72-m-0-iso10646-1" nil)
+  
   
   ;; (progn (color-theme-jsc-light2) ;;nice and bright
   ;;        (highlight-current-line-set-bg-color "light yellow"))
@@ -72,7 +73,12 @@
   ;; Some changes
   (highlight-current-line-on t)
   (highlight-current-line-set-bg-color "#ddddcc")
-
+  
+  (setq-default mode-line-buffer-identification
+              (list (propertize "%12b" 'face
+                                (list :weight 'bold
+                                      :foreground "Orchid"))))
+    
   (custom-set-faces
    ;;'(dired-directory ((t (:foreground "#008800"))))
    '(dired-directory ((t (:inherit font-lock-function-name-face))))
@@ -81,6 +87,10 @@
    '(ido-first-match ((t (:inherit font-lock-string-face))))
    '(ido-first-match-face ((t (:inherit font-lock-string-face))))
    '(minibuffer-prompt ((t (:foreground "black"))))
+   '(nxml-element-local-name ((t (:foreground "#07C" ))))
+   '(nxml-tag-delimiter ((t (:inherit nxml-element-local-name))))
+   '(nxml-attribute-local-name ((t (:foreground "#7C0" ))))
+   '(nxml-attribute-value ((t (:inherit font-lock-string-face))))
    '(default ((t (:background "#eeeedd" :foreground "#333344"))))))
 
 (defun aj-text-mode()
@@ -91,10 +101,25 @@
   (progn (color-theme-jsc-light2) ;;dark and fine
          (highlight-current-line-set-bg-color "grey93"))
   (custom-set-faces
+   '(minibuffer-prompt ((t (:foreground "black"))))
+   '(dired-directory ((t (:inherit font-lock-function-name-face))))
+   '(ido-subdir ((t (:inherit font-lock-function-name-face))))
+   '(ido-only-match ((t (:inherit font-lock-string-face :weight bold))))
+   '(ido-first-match ((t (:inherit font-lock-string-face))))
+   '(ido-first-match-face ((t (:inherit font-lock-string-face))))
    '(flymake-warnline ((((class color)) (:underline "yellow"))))
    '(flyspell-duplicate ((t (:underline "Gold3"))))
    '(flyspell-incorrect ((t (:underline "OrangeRed"))))))
 
+;; http://xahlee.org/emacs/emacs_make_modern.html
+(defun toggle-line-spacing ()
+"Toggle line spacing between no extra space to extra half line height."
+(interactive)
+(if (eq line-spacing nil)
+    (setq-default line-spacing 0.2) ; add 0.5 height between lines
+  (setq-default line-spacing nil)   ; no extra heigh between lines
+  ))
+(global-set-key (kbd "<f7>") 'toggle-line-spacing)
 
 ;; From http://sachachua.com/wp/2006/09/15/emacs-changingn-the-font-size-on-the-fly/
 (defun sacha/increase-font-size ()

@@ -1,10 +1,11 @@
-;; Generics
-;; Time-stamp: "2010-03-31 09:50:08 anton"
+;; Generics and keybindings ~random stuff
+;; Time-stamp: "2010-11-19 21:40:52 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
 (set-default 'truncate-lines t)
 (setq delete-by-moving-to-trash t)
+(setq transient-mark-mode t)
 (global-font-lock-mode t)
 (show-paren-mode t)
 (setq fill-column 80)
@@ -28,15 +29,24 @@
 (set-selection-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 (set-language-environment "UTF-8")
-;;(set-input-method nil)
+(fset 'yes-or-no-p 'y-or-n-p)
 
-(setq exec-path (cons "/opt/local/bin" exec-path))
-(setenv "PATH" (concat (expand-file-name "~/bin") ":/opt/local/bin:/opt/local/sbin:"
-                       (getenv "PATH")))
-(set-variable 'vc-path '("/opt/local/bin"))
+(let ((aj-path (mapcar 'expand-file-name '("~/bin" ;; Mine
+                                           "/usr/local/bin" ;; Brew
+                                           "/opt/local/bin" ;; Macport
+                                           "/opt/local/sbin"
+                                           "~/.gem/ruby/1.8/bin" ;; Gems
+                                           "/usr/local/mysql/bin"))))
 
-;; Regex-tool
-;; (set-variable 'regex-tool-backend (quote perl))
+  ;; Set PATH env
+  (setenv "PATH"
+          (concat (mapconcat 'identity aj-path ":") ":" (getenv "PATH") ))
+  ;; Set exec-path
+  (setq exec-path
+        (append aj-path
+                exec-path)))
+
+(set-variable 'vc-path '("/usr/local/bin"))
 
 ;; Mouse-scroll amount
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control))))
@@ -45,12 +55,12 @@
 (setq frame-title-format '(multiple-frames "%b" "%b"))
 
 ;; Skeletons
-(global-set-key "'" 'skeleton-pair-insert-maybe)
-(global-set-key "\"" 'skeleton-pair-insert-maybe)
-(global-set-key "[" 'skeleton-pair-insert-maybe)
-(global-set-key "(" 'skeleton-pair-insert-maybe)
-(global-set-key "{" 'skeleton-pair-insert-maybe)
-(set-variable 'skeleton-pair t)
+;; (global-set-key "'" 'skeleton-pair-insert-maybe)
+;; (global-set-key "\"" 'skeleton-pair-insert-maybe)
+;; (global-set-key "[" 'skeleton-pair-insert-maybe)
+;; (global-set-key "(" 'skeleton-pair-insert-maybe)
+;; (global-set-key "{" 'skeleton-pair-insert-maybe)
+;; (set-variable 'skeleton-pair t)
 
 ;; Keybindings
 (when (fboundp 'windmove-default-keybindings)
@@ -85,8 +95,12 @@
 (global-set-key "\C-w" 'backward-kill-word) ;; erases standard kill-region
 (global-set-key "\C-x\C-k" 'kill-region) ;; replace standard kill-region
 (global-set-key "\M-y" 'anything-show-kill-ring) ;; replace standard yank-pop
-(global-set-key (kbd "C-x C-b") (lambda() (interactive) (ibuffer t))) ;; removes standard list-buffers
+(global-set-key (kbd "C-x C-b") (lambda() (interactive) (ibuffer nil))) ;; removes standard list-buffers
 (global-set-key "\C-co" 'ffap)
+;; Open file with osx open shell command
+(global-set-key "\C-cO" (lambda() (interactive)
+                          (shell-command
+                           (concat "open " (buffer-file-name)))))
 (global-set-key "\C-x\C-m" 'execute-extended-command) ;; M-x
 (global-set-key "\C-c\C-m" 'execute-extended-command) ;; M-x
 (global-set-key "\C-xO" (lambda () (interactive) (other-window -1)))
@@ -255,7 +269,7 @@
       (setq col (+ 1 (current-column)))
       (set-selective-display
        (if selective-display nil (or col 1))))))
-(global-set-key [f1] 'aj-toggle-fold)
+(global-set-key [(M C i)] 'aj-toggle-fold)
 
 ;; Logview mode from http://stackoverflow.com/questions/133821/the-best-tail-gui
 (defvar angry-fruit-salad-log-view-mode-map

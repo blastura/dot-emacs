@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-09-18 17:07:46 anton"
+;; Time-stamp: "2010-11-19 21:58:31 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -9,13 +9,14 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/magit"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/rainbow"))
 
 ;; Auto install
+;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/auto-install.el")
 (require 'auto-install)
 (setq auto-install-directory (expand-file-name "~/.emacs.d/lisp/auto-install/"))
 (add-to-list 'load-path auto-install-directory)
+
 (require 'ring+)
 (require 'doremi)
 (require 'doremi-frm)
@@ -25,6 +26,10 @@
 ;;(auto-install-from-url "http://autopair.googlecode.com/svn/tags/REL_0_3/autopair.el")
 (require 'autopair)
 (autopair-global-mode t)
+
+;;(auto-install-from-url "http://www.dr-qubit.org/undo-tree/undo-tree.el")
+(require 'undo-tree)
+
 
 ;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -36,7 +41,7 @@
 
 ;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/haml-mode.el")
 ;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/sass-mode.el")
-(require 'sass-mode)
+;;(require 'sass-mode)
 
 ;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
@@ -69,10 +74,15 @@
 
 ;; Modes
 (require 'flymake)
-(require 'magit)
 (require 'rainbow-mode)
 (require 'anything-config)
-(require 'git)
+;; (require 'magit)
+;; (require 'git)
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/git-emacs"))
+(require 'git-emacs)
+(require 'git-status)
+
 ;; (auto-install-from-url "http://github.com/juergenhoetzel/babel/raw/STABLE/babel.el")
 (require 'babel) ;; Translate with eg Google
 (require 'yaml-mode)
@@ -101,7 +111,8 @@
 (require 'aj-ido)
 (require 'aj-term)
 (require 'aj-js)
-;;(requireaj 'my-python)
+(require 'aj-dired)
+(require 'aj-python)
 ;; (requiraje 'anything-match-plugin)
 ;; (set-variable 'anything-mp-highlight-delay nil)
 ;;(require 'fuzzy-match)
@@ -119,16 +130,17 @@
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 ;; Other customizations
-;;(load "/Applications/Emacs.app/Contents/Resources/site-lisp/nxml-mode/rng-auto.el")
+;; (load "/Applications/Emacs.app/Contents/Resources/site-lisp/nxml-mode/rng-auto.el")
 (require 'aj-nxml)
-;;(load "~/.emacs.d/lisp/nxhtml/autostart.el")
+;; (load "~/.emacs.d/lisp/nxhtml/autostart.el")
+(setq mumamo-background-colors nil)
 
 (require 'rst)
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 
 ;; Yasnippet
 (require 'yasnippet)
-(yas/load-directory "~/.emacs.d/aj-snippets")
+;; (yas/load-directory "~/.emacs.d/aj-snippets")
 (setq yas/prompt-functions '(yas/dropdown-prompt
                              yas/ido-prompt
                              yas/completing-prompt

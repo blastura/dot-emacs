@@ -14,8 +14,8 @@
 
 (push '("\\.c$" flymake-c-init) flymake-allowed-file-name-masks)
 
-(add-hook 'c-mode-hook
-          '(lambda ()
-             (flymake-mode t)))
+;; (add-hook 'c-mode-hook
+;;           '(lambda ()
+;;              (flymake-mode t)))
 
 (provide 'aj-flymake-c)

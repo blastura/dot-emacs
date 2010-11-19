@@ -23,6 +23,8 @@
 
 ;;;###autoload
 (require 'derived)
+;;;###autoload
+(require 'comint)
 
 ;;;###autoload (add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
 ;;;###autoload
@@ -33,6 +35,8 @@
 
 (defun less-parse()
   (save-excursion
-    (shell-command (concat "lessc " (buffer-name) "&") nil "*Less errors*"))
-  nil) ;; Return nil to not interrupt saving process
+    ;;(shell-command (concat "lessc " (buffer-name) "&") nil "*Less errors*"))
+    (apply 'make-comint "less-compiler" "lessc" nil (list (buffer-name))))
+  ;; Return nil to not interrupt saving process
+  nil)
 (provide 'less-mode)

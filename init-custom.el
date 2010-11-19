@@ -4,11 +4,12 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(Man-notify-method (quote pushy))
- '(cursor-type (quote box))
+ '(cursor-type (quote box) t)
  '(ecb-options-version "2.40")
+ '(git-state-modeline-decoration (quote git-state-decoration-large-dot))
  '(jde-jdk (quote ("1.6")))
  '(jde-jdk-registry (quote (("1.6" . "/System/Library/Frameworks/JavaVM.framework/Versions/1.6"))))
- '(mac-option-modifier nil)
+ '(ns-alternate-modifier nil)
  '(org-agenda-files (quote ("~/Documents/org/notes.org")))
  '(paren-match-face (quote paren-face-match-light))
  '(paren-sexp-mode t))
@@ -39,3 +40,12 @@
 
 
 ;; '(default-frame-alist (quote ((tool-bar-lines . 0) (mouse-color . "black") (foreground-color . "black") (cursor-color . "red") (border-color . "#888a85") (background-mode . light) (background-color . "#eeeedd") (menu-bar-lines . 1) (cursor-type . box) (vertical-scroll-bars) (internal-border-width . 0) (left-fringe . 1) (right-fringe) (fringe) (vc-annotate-very-old-color . "#0046FF") (senator-eldoc-use-color . t))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(cursor ((t (:background "red"))))
+ '(flymake-errline ((((class color)) (:underline "OrangeRed"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow"))))
+ '(org-hide ((((background light)) (:foreground "dim gray")) (((background dark)) (:foreground "dim gray")))))
