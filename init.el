@@ -1,12 +1,11 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-11-19 21:58:31 anton"
+;; Time-stamp: "2010-11-19 22:53:00 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp-personal"))
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/rainbow"))
@@ -139,8 +138,17 @@
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 
 ;; Yasnippet
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet"))
 (require 'yasnippet)
-;; (yas/load-directory "~/.emacs.d/aj-snippets")
+
+;; Develop in ~/emacs.d/mysnippets, but also
+;; try out snippets in ~/Downloads/interesting-snippets
+(setq yas/root-directory '("~/.emacs.d/aj-snippets"
+                           "~/.emacs.d/lisp/yasnippet/snippets"))
+
+;; Map `yas/load-directory' to every element
+(mapc 'yas/load-directory yas/root-directory)
+
 (setq yas/prompt-functions '(yas/dropdown-prompt
                              yas/ido-prompt
                              yas/completing-prompt
