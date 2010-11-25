@@ -1,6 +1,8 @@
 ;; Ediff
 (set-variable 'ediff-split-window-function 'split-window-horizontally)
 
+
+;; TODO: fix, this adds a lot of hooks without removing them!
 (add-hook 'ediff-load-hook
           (lambda ()
             (add-hook 'ediff-before-setup-hook

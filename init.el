@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-11-19 22:53:00 anton"
+;; Time-stamp: "2010-11-21 20:38:45 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -29,6 +29,8 @@
 ;;(auto-install-from-url "http://www.dr-qubit.org/undo-tree/undo-tree.el")
 (require 'undo-tree)
 
+;;(auto-install-from-url "http://tromey.com/elpa/package.el")
+(require 'package)
 
 ;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -138,13 +140,14 @@
 (add-to-list 'auto-mode-alist '("\\.rst$" . rst-mode))
 
 ;; Yasnippet
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet"))
+;; http://yasnippet.googlecode.com/files/yasnippet-0.6.1c.tar.bz2
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet-0.6.1c/"))
 (require 'yasnippet)
 
 ;; Develop in ~/emacs.d/mysnippets, but also
 ;; try out snippets in ~/Downloads/interesting-snippets
 (setq yas/root-directory '("~/.emacs.d/aj-snippets"
-                           "~/.emacs.d/lisp/yasnippet/snippets"))
+                           "~/.emacs.d/lisp/yasnippet-0.6.1c/snippets"))
 
 ;; Map `yas/load-directory' to every element
 (mapc 'yas/load-directory yas/root-directory)

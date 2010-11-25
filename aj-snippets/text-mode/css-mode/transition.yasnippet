@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: transition
+# key: transition
+# contributor: Anton Johansson <anton.johansson@gmail.com>
+# --
+ 
+-webkit-transition: ${1:property(margin-left|all)} ${2:time(1s)} ${3:ease-in-out|linear};
+   -moz-transition: $1 $2 $3;
+     -o-transition: $1 $2 $3;
+        transition: $1 $2 $3;

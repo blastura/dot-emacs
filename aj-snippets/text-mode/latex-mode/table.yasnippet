@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: table
+# key: table
+# contributor: Anton Johansson <anton.johansson@gmail.com>
+# --
+\begin{table}[${1:!htb}]
+  \centering
+  \begin{footnotesize}
+    \begin{tabular} {${2:c | c }}
+      % BEGIN RECEIVE ORGTBL ${3:name}
+      % END RECEIVE ORGTBL $3
+   \end{tabular}
+  \end{footnotesize}
+  \caption{$4}
+  \label{tbl:$3}
+\end{table}
+\begin{comment}
+  #+ORGTBL: SEND $3 orgtbl-to-latex :splice t
+  | $0 | |
+\end{comment}
