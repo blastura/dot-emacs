@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-11-21 20:38:45 anton"
+;; Time-stamp: "2010-11-26 13:48:51 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -8,7 +8,6 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/rainbow"))
 
 ;; Auto install
 ;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/auto-install.el")
@@ -19,6 +18,7 @@
 (require 'ring+)
 (require 'doremi)
 (require 'doremi-frm)
+
 ;;(auto-install-from-url "http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el")
 (autoload 'espresso-mode "espresso" nil t)
 
@@ -38,6 +38,8 @@
 
 ;;(auto-install-from-url "http://www.xsteve.at/prg/emacs/psvn.el")
 (require 'psvn)
+
+;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/php-mode-improved.el")
 (require 'php-mode-improved)
 
 ;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/haml-mode.el")
@@ -75,7 +77,10 @@
 
 ;; Modes
 (require 'flymake)
+
+;; (auto-install-from-url "http://git.naquadah.org/?p=rainbow.git;a=blob_plain;f=rainbow-mode.el")
 (require 'rainbow-mode)
+
 (require 'anything-config)
 ;; (require 'magit)
 ;; (require 'git)
@@ -84,8 +89,29 @@
 (require 'git-emacs)
 (require 'git-status)
 
+;; Auctex
+;; From http://ftp.gnu.org/pub/gnu/auctex/auctex-11.86.zip
+;; ./configure --prefix=/Users/anton/.emacs.d/lisp/auctex \
+;; 	--without-texmf-dir \
+;; 	--with-emacs=/Applications/Emacs-23.app/Contents/MacOS/Emacs \
+;; 	--with-lispdir=/Users/anton/.emacs.d/lisp/auctex
+;; make && make install
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/auctex"))
+(load "auctex.el" nil t t)
+(load "preview-latex.el" nil t t)
+(setq TeX-view-program-list-builtin
+      '(("Preview.app" "open -a Preview.app %o")
+        ("Skim" "open -a Skim.app %o")
+        ("displayline" "displayline %n %o %b")
+        ("open" "open %o")))
+(setq TeX-view-program-selection '((output-dvi "open")
+                                   (output-pdf "open")
+                                   (output-html "open")))
+
+
 ;; (auto-install-from-url "http://github.com/juergenhoetzel/babel/raw/STABLE/babel.el")
 (require 'babel) ;; Translate with eg Google
+
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$\\|\\.yaml$" . yaml-mode))
 
