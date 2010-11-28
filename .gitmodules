@@ -4,3 +4,6 @@
 # [submodule "lisp/git-emacs"]
 # 	path = lisp/git-emacs
 # 	url = git@github.com:antonj/git-emacs.git
+[submodule "lisp/git-emacs"]
+	path = lisp/git-emacs
+	url = git@github.com:antonj/git-emacs.git
