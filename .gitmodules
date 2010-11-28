@@ -1,9 +1,6 @@
 [submodule "lisp/org-mode"]
 	path = lisp/org-mode
 	url = git://repo.or.cz/org-mode.git
-# [submodule "lisp/git-emacs"]
-# 	path = lisp/git-emacs
-# 	url = git@github.com:antonj/git-emacs.git
 [submodule "lisp/git-emacs"]
 	path = lisp/git-emacs
 	url = git@github.com:antonj/git-emacs.git
