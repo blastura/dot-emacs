@@ -42,14 +42,13 @@
   ;; TODO: fgly
   ;; Howto test for nil and 0 zerop doesn't
   ;; find is used by rgrep don't hide buffer
-  (let ((string-match (string-match "find" aj-compile-command)))
+  (let ((hide (string-match "find" aj-compile-command)))
     (when (and (eq process-status 'exit)
                (zerop exit-status)
                ;; Not nil and not 0 means that command was "find" at
                ;; pos 0 which means that I don't want to restore the
                ;; layout
-               (not (and string-match
-                         (zerop string-match))))
+               (not (and (integerp hide) (zerop hide))))
       (set-window-configuration aj-compilation-saved-window-configuration))))
 (ad-activate 'compilation-handle-exit)
 

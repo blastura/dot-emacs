@@ -1,5 +1,5 @@
 ;; Generics and keybindings ~random stuff
-;; Time-stamp: "2010-11-19 21:40:52 anton"
+;; Time-stamp: "2010-11-27 14:44:54 anton"
 (set-variable 'inhibit-startup-message t)
 (set-variable 'user-mail-address "anton\.johansson@gmail\.com")
 (set-variable 'user-full-name "Anton Johansson")
@@ -270,6 +270,11 @@
       (set-selective-display
        (if selective-display nil (or col 1))))))
 (global-set-key [(M C i)] 'aj-toggle-fold)
+
+(add-hook 'emacs-lisp-mode-hook
+          (lambda()
+            (local-set-key [(M C i)] 'aj-toggle-fold)))
+
 
 ;; Logview mode from http://stackoverflow.com/questions/133821/the-best-tail-gui
 (defvar angry-fruit-salad-log-view-mode-map

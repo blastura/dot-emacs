@@ -1,5 +1,5 @@
 ;; Anton Johansson
-;; Time-stamp: "2010-11-26 13:48:51 anton"
+;; Time-stamp: "2010-11-26 18:42:49 anton"
 
 ;; Load paths
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -9,53 +9,96 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/color-theme-6.6.0"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/org-mode/lisp"))
 
-;; Auto install
-;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/auto-install.el")
-(require 'auto-install)
-(setq auto-install-directory (expand-file-name "~/.emacs.d/lisp/auto-install/"))
-(add-to-list 'load-path auto-install-directory)
+;;;; Auto-install start ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(progn
 
-(require 'ring+)
-(require 'doremi)
-(require 'doremi-frm)
+  ;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/auto-install.el")
+  (require 'auto-install)
+  (setq auto-install-directory (expand-file-name "~/.emacs.d/lisp/auto-install/"))
+  (add-to-list 'load-path auto-install-directory)
 
-;;(auto-install-from-url "http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el")
-(autoload 'espresso-mode "espresso" nil t)
+  ;; TODO: Autoinstalled from where?
+  (require 'ring+)
+  (require 'doremi)
+  (require 'doremi-frm)
 
-;;(auto-install-from-url "http://autopair.googlecode.com/svn/tags/REL_0_3/autopair.el")
-(require 'autopair)
-(autopair-global-mode t)
+  ;;(auto-install-from-url "http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el")
+  (autoload 'espresso-mode "espresso" nil t)
 
-;;(auto-install-from-url "http://www.dr-qubit.org/undo-tree/undo-tree.el")
-(require 'undo-tree)
+  ;;(auto-install-from-url "http://autopair.googlecode.com/svn/tags/REL_0_3/autopair.el")
+  (require 'autopair)
+  (autopair-global-mode t)
 
-;;(auto-install-from-url "http://tromey.com/elpa/package.el")
-(require 'package)
+  ;;(auto-install-from-url "http://www.dr-qubit.org/undo-tree/undo-tree.el")
+  (require 'undo-tree)
 
-;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(setq auto-mode-alist (cons '("\\.text$\\|\\.markdown$" . markdown-mode) auto-mode-alist))
+  ;;(auto-install-from-url "http://jblevins.org/git/markdown-mode.git/plain/markdown-mode.el")
+  (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+  (setq auto-mode-alist (cons '("\\.text$\\|\\.markdown$" . markdown-mode) auto-mode-alist))
 
-;;(auto-install-from-url "http://www.xsteve.at/prg/emacs/psvn.el")
-(require 'psvn)
+  ;;(auto-install-from-url "http://www.xsteve.at/prg/emacs/psvn.el")
+  (require 'psvn)
 
-;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/php-mode-improved.el")
-(require 'php-mode-improved)
+  ;; (auto-install-from-url "http://www.emacswiki.org/emacs/download/php-mode-improved.el")
+  (require 'php-mode-improved)
 
-;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/haml-mode.el")
-;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/sass-mode.el")
-;;(require 'sass-mode)
+  ;;;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/haml-mode.el")
+  ;;;; (auto-install-from-url "http://github.com/nex3/haml/raw/master/extra/sass-mode.el")
+  ;;(require 'sass-mode)
 
-;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
-(autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
-(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+  ;; use groovy-mode when file ends in .groovy or has #!/bin/groovy at start
+  ;; TODO: (auto-install-from-url ???)
+  (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
+  (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+  (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
-;; ;; w3m
-;; (add-to-list 'load-path (expand-file-name "/opt/local/share/emacs/site-lisp/w3m"))
-;; (require 'w3m-load)
-;; (require 'w3m-e21)
-;; (provide 'w3m-e23)
+  ;; Personal
+  (autoload 'less-mode "less-mode")
+  (add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
+
+  ;;(autoload 'scss-mode "scss-mode")
+  (require 'scss-mode)
+  ;;(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+
+  ;; Modes
+  (require 'flymake)
+
+  ;; (auto-install-from-url "http://git.naquadah.org/?p=rainbow.git;a=blob_plain;f=rainbow-mode.el")
+  (require 'rainbow-mode)
+
+  ;; (auto-install-from-url "http://github.com/juergenhoetzel/babel/raw/STABLE/babel.el")
+  (require 'babel) ;; Translate with eg Google
+
+  ;;
+  ;;;; Auto-install end ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  )
+
+;;;; ELPA start ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(progn
+  ;;
+
+  ;; OLD package.el
+  ;; (auto-install-from-url "http://tromey.com/elpa/package.el")
+  ;; NEW Builtin emacs pull from git repo HEAD
+  ;;(auto-install-from-url "http://git.savannah.gnu.org/gitweb/?p=emacs.git;a=blob_plain;f=lisp/emacs-lisp/package.el;hb=HEAD")
+  (require 'package)
+  (package-initialize) ;; TODO: should be done within package.el?
+  ;; (defcustom package-enable-at-startup t ...) maybe in emacs24 only?
+
+  ;; Use official emacs 24 repository with ELPA
+  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                           ("gnu" . "http://elpa.gnu.org/packages/")))
+
+  ;;;; Auctex elpa from gnu repo
+  ;; (package-install 'auctex)
+  ;;;; ELPA end ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  )
+
+
+;; Anyting
+(require 'anything-config)
+;; (require 'magit)
+;; (require 'git)
 
 ;; JDE ;; CEDET needs to be loaded first
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/jde/lisp"))
@@ -67,51 +110,14 @@
 (require 'jde)
 (require 'aj-java)
 
-;; Personal
-(autoload 'less-mode "less-mode")
-(add-to-list 'auto-mode-alist '("\\.less\\'" . less-mode))
-
-;;(autoload 'scss-mode "scss-mode")
-(require 'scss-mode)
-;;(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-
-;; Modes
-(require 'flymake)
-
-;; (auto-install-from-url "http://git.naquadah.org/?p=rainbow.git;a=blob_plain;f=rainbow-mode.el")
-(require 'rainbow-mode)
-
-(require 'anything-config)
-;; (require 'magit)
-;; (require 'git)
-
+;; Git emacs
+;; From https://github.com/tsgates/git-emacs/tree/master
+;; $ git clone git://github.com/tsgates/git-emacs.git
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/git-emacs"))
 (require 'git-emacs)
 (require 'git-status)
 
-;; Auctex
-;; From http://ftp.gnu.org/pub/gnu/auctex/auctex-11.86.zip
-;; ./configure --prefix=/Users/anton/.emacs.d/lisp/auctex \
-;; 	--without-texmf-dir \
-;; 	--with-emacs=/Applications/Emacs-23.app/Contents/MacOS/Emacs \
-;; 	--with-lispdir=/Users/anton/.emacs.d/lisp/auctex
-;; make && make install
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/auctex"))
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-(setq TeX-view-program-list-builtin
-      '(("Preview.app" "open -a Preview.app %o")
-        ("Skim" "open -a Skim.app %o")
-        ("displayline" "displayline %n %o %b")
-        ("open" "open %o")))
-(setq TeX-view-program-selection '((output-dvi "open")
-                                   (output-pdf "open")
-                                   (output-html "open")))
-
-
-;; (auto-install-from-url "http://github.com/juergenhoetzel/babel/raw/STABLE/babel.el")
-(require 'babel) ;; Translate with eg Google
-
+;; YAML
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$\\|\\.yaml$" . yaml-mode))
 
@@ -147,12 +153,10 @@
 (autoload 'git-blame-mode "git-blame"
   "Minor mode for incremental blame for Git." t)
 
-(load-file "~/.emacs.d/lisp/graphviz-dot-mode.el")
-
 ;; Javascript
 (autoload 'js2-mode "js2" nil t)
 
-;; File assosiation
+;; File association
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
@@ -170,8 +174,6 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/yasnippet-0.6.1c/"))
 (require 'yasnippet)
 
-;; Develop in ~/emacs.d/mysnippets, but also
-;; try out snippets in ~/Downloads/interesting-snippets
 (setq yas/root-directory '("~/.emacs.d/aj-snippets"
                            "~/.emacs.d/lisp/yasnippet-0.6.1c/snippets"))
 
@@ -183,7 +185,6 @@
                              yas/completing-prompt
                              yas/x-prompt
                              yas/no-prompt))
-
 
 ;; (add-to-list 'yas/extra-mode-hooks
 ;;              'nxml-mode-hook)

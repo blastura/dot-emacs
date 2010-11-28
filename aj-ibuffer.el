@@ -8,12 +8,15 @@
          ("siine" (filename . "siine"))
          ("skola" (filename . "skola"))
          ("public_html" (filename . "public_html"))
-         ("subversion" (name . "\*svn"))
-         ;; ("Magit" (name . "\*magit"))
          ("irc" (mode . rcirc-mode))
+         ("files" (filename . ".+"))
          ("help" (or (name . "\*Help\*")
                      (name . "\*Apropos\*")
-                     (name . "\*info\*"))))))
+                     (name . "\*info\*")))
+         ("shells" (mode . shell-mode))
+         ("svn" (name . "\*svn"))
+         ("git" (name . "\*git"))
+         )))
 
 (add-hook 'ibuffer-mode-hook
           '(lambda ()
