@@ -4,3 +4,6 @@
 [submodule "lisp/git-emacs"]
 	path = lisp/git-emacs
 	url = git@github.com:antonj/git-emacs.git
+[submodule "lisp-personal/scss-mode"]
+	path = lisp-personal/scss-mode
+	url = git@github.com:antonj/scss-mode.git
