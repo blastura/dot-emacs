@@ -71,6 +71,25 @@ HYPERLINK HIGHLIGHT)"
           buffer-file-name " "
           (first (split-string buffer-file-name ".scss")) ".css")))
 
+(defun scss-insert-and-indent (key)
+  "Run the command bound to KEY, and indent if necessary.
+Indentation does not take place if point is in a string or
+comment.  Adapted from js-insert-and-indent."
+  (interactive (list (this-command-keys)))
+  (call-interactively (lookup-key (current-global-map) key))
+  (let ((syntax (save-restriction (widen) (syntax-ppss))))
+    (when (and (not (nth 8 syntax))
+	      (not (nth 4 syntax)))
+      (indent-according-to-mode))))
+
+(defvar scss-mode-map
+  (let ((keymap (make-sparse-keymap)))
+    (define-key keymap (kbd "C-c C-c") #'scss-compile)
+    (mapc (lambda (key)
+	    (define-key keymap key #'scss-insert-and-indent))
+	  '("{" "}" ";"))
+    keymap))
+
 ;;;###autoload
 (define-derived-mode scss-mode css-mode "Scss"
   "Major mode for editing Scss files, http://sass-lang.com/
@@ -79,8 +98,6 @@ Special commands:
   (font-lock-add-keywords nil scss-font-lock-keywords)
   (add-to-list 'compilation-error-regexp-alist scss-compile-error-regex)
   (add-hook 'after-save-hook 'scss-compile-maybe nil t))
-
-(define-key scss-mode-map "\C-c\C-c" 'scss-compile)
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
